@@ -1,0 +1,715 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/data-structure/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/data-structure/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/data-structure/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="data structure," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/data-structure/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Binary TreeAbstractBinary tree - a tree with binary branches.在阅读这篇文章之前，如果你对于链表和递归不是很了解的话，建议先阅读一下这两篇文章，他们分别用简单生动的例子描述了递归和链表，对于理解本文会非常有帮助。第1天的LinkedList 第1天的递归。
+Introduction二叉树，是鼎鼎大名的数据结构。我们之前讲过递归，我们已经理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第2天的BinaryTree">
+<meta property="og:url" content="https://alex-mengx.github.io/2017/03/01/postBinaryTree/index.html">
+<meta property="og:site_name" content="Alex's data structure class">
+<meta property="og:description" content="Binary TreeAbstractBinary tree - a tree with binary branches.在阅读这篇文章之前，如果你对于链表和递归不是很了解的话，建议先阅读一下这两篇文章，他们分别用简单生动的例子描述了递归和链表，对于理解本文会非常有帮助。第1天的LinkedList 第1天的递归。
+Introduction二叉树，是鼎鼎大名的数据结构。我们之前讲过递归，我们已经理">
+<meta property="og:updated_time" content="2017-03-11T06:10:10.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第2天的BinaryTree">
+<meta name="twitter:description" content="Binary TreeAbstractBinary tree - a tree with binary branches.在阅读这篇文章之前，如果你对于链表和递归不是很了解的话，建议先阅读一下这两篇文章，他们分别用简单生动的例子描述了递归和链表，对于理解本文会非常有帮助。第1天的LinkedList 第1天的递归。
+Introduction二叉树，是鼎鼎大名的数据结构。我们之前讲过递归，我们已经理">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/data-structure/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alex-mengx.github.io/2017/03/01/postBinaryTree/"/>
+
+
+
+
+
+  <title> 第2天的BinaryTree | Alex's data structure class </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/data-structure/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Alex's data structure class</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/data-structure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/data-structure/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/data-structure/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alex-mengx.github.io/data-structure/2017/03/01/postBinaryTree/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="弦子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/data-structure/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Alex's data structure class">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Alex's data structure class" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第2天的BinaryTree
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-01T22:57:09-05:00">
+                2017-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Binary-Tree"><a href="#Binary-Tree" class="headerlink" title="Binary Tree"></a>Binary Tree</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Binary tree - a tree with binary branches.<br>在阅读这篇文章之前，如果你对于链表和递归不是很了解的话，建议先阅读一下这两篇文章，他们分别用简单生动的例子描述了递归和链表，对于理解本文会非常有帮助。<a href="https://alex-mengx.github.io/data-structure/2017/02/11/postLinkedList/">第1天的LinkedList</a> <a href="https://alex-mengx.github.io/data-structure/2017/02/24/postRecursive">第1天的递归</a>。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>二叉树，是鼎鼎大名的数据结构。我们之前讲过递归，我们已经理解了递归的含义和作用，二叉树其实也可以用递归的思想来理解。在理解结构之前，我们还是先来用生活的例子来浅尝辄止的接触一下。首先我们来回忆一下链表中那个藏宝和纸条的例子。在那个故事中，每个藏宝点都有一个宝藏和一张写着下一个藏宝点的纸条，而你的手中则掌握着指向第一个藏宝点的纸条。这样的话，只要你始终保有这张最初的纸条，你就总能够找到第一个藏宝点，进而沿着链路一直找到这条链的终点。现在我们来设想一种新的情况。你手中依旧掌握着一张最初的纸条，指向了某个藏宝的地点。然而，这一次，每个藏宝点都有两张纸条，指向了两个不同的藏宝点。你在找寻的过程中，就需要在每一个二叉路口作出决定：“向左走？向右走？”。这就是一颗由藏宝点构成的二叉树。链表有一个特性，就是无论从哪一个点开始访问，这个点向后一直到终点都是一条链表。二叉树有着一样的特性。一个二叉树的结构可以理解为它是由一个根节点和两个二叉树所构成的树。一个二叉树，它的两边的子树是两颗完整的二叉树。就如同宝藏二叉树，无论你站在哪个藏宝点，两张纸条上所标示的地点都是完整的二叉树。递归的特性就在这里体现了出来。针对根节点设计的方法，对于左右两个子树就会同样适用。</p>
+<h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a>Methodology</h2><p>我们来通过修改之前的LinkedList来一步一步的实现这个二叉树。先来看节点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Node &#123;</div><div class="line">    E treasure;</div><div class="line"></div><div class="line">    Node left;</div><div class="line">    Node right;</div><div class="line"></div><div class="line">    public Node(E treasure, Node left, Node right) &#123;</div><div class="line">        this.treasure = treasure;</div><div class="line">        this.left = left;</div><div class="line">        this.right = right;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们看到，这个节点跟链表的节点十分的类似，唯一的区别就是多了一个指向其他的节点的指针。这样这个节点就可以存储一份宝藏，同时可以指向另外两个藏宝点。但是，如果这两个藏宝点只是随便指向其他的点，那么我们寻找特定宝藏的时候就会很麻烦，可能需要走遍全部的宝藏才会找到。那么，我们怎样可以使得找寻特定宝藏这个操作变得简单快速呢？这其实就是二叉树的重要特性之一，有序性。在我们从零节点开始创建这个宝藏二叉树的时候，我们的插入就是有目的性的。想象一下，每个藏宝点的宝藏跟它所指向的下两个藏宝点的宝藏都有一定的关系，比如从你能去到的第一点开始，你就发现那里的两张纸条写着“食物向左”和“玩具向右”。如果我们想寻找“棉花糖”这个宝藏，我们就会向左走。左边的节点的两张纸条则是“糖果向左”和“饮料向右”， 我们就需要继续向左。依次深入，我们就会找到我们所找寻的棉花糖。在实际操作中，则可以是数字的大小，字符串的顺序等等。所以，从根节点开始，到任意一个叶节点 - 叶节点就是左右子树都是null的节点，也就是类似链表的终点，只不过这个终点在树中不唯一 - 都是一条完整的链表，链表的元素则是从小到大或者从大到小，或者是其他的某种顺序。所以，树可以被想象成多条链表，只不过相互有重合。现在我们来构建一个树的基本框架，方便我们后面的实现。</p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class BinaryTree &lt;T extends Comparable&lt;T&gt;&gt; &#123;</div><div class="line">    Node root;</div><div class="line"></div><div class="line">    class Node &#123;</div><div class="line">        T treasure;</div><div class="line">        Node left;</div><div class="line">        Node right;</div><div class="line">        public Node(T treasure, Node left, Node right) &#123;</div><div class="line">            this.treasure = treasure;</div><div class="line">            this.left = left;</div><div class="line">            this.right = right;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        @Override</div><div class="line">        public String toString()&#123;</div><div class="line">            return Optional.ofNullable(left).map(node -&gt; node.toString()).orElse(&quot; &quot;) </div><div class="line">                    + &quot; &quot; + treasure.toString() + &quot; &quot;</div><div class="line">                    + Optional.ofNullable(right).map(node -&gt; node.toString()).orElse(&quot; &quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这就是我们的树啦。为什么这个树的节点所包含的宝藏要是Comparable呢？我们先回忆一下之前的Java特性那篇文章。<a href="https://alex-mengx.github.io/data-structure/2017/02/17/postJavaProperties/">第1天的Java特性</a> 从这里，我们知道了extends的效果就是使得类可以从父类中继承所有的非私有方法和元素。在我们这棵树中，节点所包含的宝藏的类型是未知的，这样我们就可以装入任何的类型。但是，为了使得树的特性可以表现出来，既装入的元素需要可以判断相互关系。比如数字，比如字符串，或者其他的可以比较的类型。所以，这里的<code>BinaryTree &lt;T extends Comparable&lt;T&gt;&gt;</code>就限制了T必须要是Comparable的子类。也就是说，T必须要实现了T.compareTo(T t)的方法，返回-1,0,1来代表大于等于和小于的关系。这样，我们在放入元素的时候，就可以按照比如小的放左边，大的放右边的规律来插入。我们在实现插入查找之类的方法的时候，就会具体看到有这种关系和规律所带来的便利之处。另外多提一点，因为二叉树是递归的所以左右两侧都是两个完整的二叉树。所以假设我们有二叉树A，根节点包含了数字n，那么A的左边子树所包含的数字一定都小于n，而右边的子树则一定只包含大于n的数字。这条规律同样是递归的，适用于任何一个A的子树。比如对于A的某个右侧的子树n+m，则有n+m的左子树的全部数字都小于n+m，右子树的全部数字都大于n+m。这条推论反之也是成立的，既对于树A所包含的全部数字，小于n的一定在左侧。而子树n+m，这棵子树所包含的数字中小于n+m的数字也一定在子树n+m的左侧。你或许会感到矛盾，n不是也小于n+m吗？可是n作为A的根节点，怎么可能会在n+m这颗子树的左边子树呢？是的，注意n+m所包含的数字合集是远小于A的，n并不在n+m这棵树包含的数字中。只有n+m树所包含的数字，才符合这个逻辑。另外或许你对于这个toString方法很困惑，不要紧，我们先实现别的方法，最后再来看它，到时候你会很容易就理解它。</p>
+<h3 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h3><p>插入对于二叉树是很简单的。假设我们要插入数字n，来看逻辑：</p>
+<ol>
+<li>首先看根节点。如果root是null，则root变成新的Node(n, null,null)，既包含数字n，左右子树皆为null，返回即可。</li>
+<li>逻辑分支一：如果能进行到这里，证明root不是null。那么我们来比较n和root.treasure,如果小于，则插入左边的子树。</li>
+<li>逻辑分支二：如果n大于root.treasure，则插入右边的子树。</li>
+</ol>
+<p>重点在这里，我们如果用loop，代码量和判断会比较复杂。如果用递归的思想来解决这个问题，则会简化很多。我们来做一下简单的思维实验和设计。首先我们需要一个方法，这个方法的操作必须要针对一颗二叉树，这样对于子树我们就可以重复调用这么方法。其次我们需要边界判断，在条件满足的时候要停止继续递归深入。我们来先看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public void add(T t) &#123;</div><div class="line">    if (t == null)</div><div class="line">            return;</div><div class="line">    if (root == null)</div><div class="line">        root = new Node(e, null, null);</div><div class="line">    else add(t, root);</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void add(T t, Node root)&#123;</div><div class="line">    if (root.treasure.equals(t))</div><div class="line">        return;</div><div class="line">    if (root.treasure.compareTo(t) &gt; 0)&#123;</div><div class="line">        if (root.left == null)</div><div class="line">            root.left = new Node(t, null, null);</div><div class="line">        else add(t, root.left);</div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        if (root.right == null)</div><div class="line">            root.right = new Node(t, null, null);</div><div class="line">        else add(t, root.right);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>第一个add方法只接受一个T作为参数，它更像是一个对外的接口，接受了要插入的元素T之后和跟节点一起传递给我们的递归的add方法。而私有的add方法就是我们的重点了。我们来看看每一行的逻辑。首先是签名，这个方法接受要插入的元素e，和开始插入的根节点root，然后将e插入到root树中合适的位置。在来看这个方法的实现，首先我们需要判断这个根节点root所保存的元素与要被插入的元素t是否相等。因为我们限制了T必需是Comparable的子类，所以T一定有compare这个方法的实现。通过判断，如果root元素与t相等，则我们可以停止插入的动作并且返回，因为我们不想插入同样的元素。继续看下面的代码。如果不相等，则我们需要用conpareTo方法来判断root元素和t的关系，用这个关系来决定t应该被插入哪边的子树。在这个实现中，如果t小于root元素，则我们插入左边。反之则插入右边。再决定了插入哪侧子树之后，我们查看这一侧的树是否是null，如果是null，则新建一个节点，让root的对应的指针指向这个节点。而如果这一侧的树不为null，则我们需要做的事情就是获取这个子树的根节点和t然后找到一个方法可以接受子树的root节点和t，来将t插入到子树合适的位置。由二叉树和递归的特性可以知道，二叉树的子树也是一个完整的二叉树，而子树的根节点就是父节点的某一侧的节点。由此可知，我们实现的add方法，不仅对于根节点root和t有效，应该也对于root.left或者root.right和元素t有效。所以我们可以递归调用<code>add(T t, Node root)</code>方法来实现插入。<br>我们来看一个实际运行的例子。假设我们有数字集合<code>{4,2,9,5,7}</code>，我们来按照代码一步一步的插入这些数字到一个空的二叉树中。<br>插入数字4，add(4)。root为null，所以root = new Node(4, null,null);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">    4   // first number, in the root</div><div class="line">  /   \</div><div class="line">null  null</div></pre></td></tr></table></figure></p>
+<p>插入数字2，add(2). 因为root 不为 null, 所以我们调用add(4, root)。 进入私有add方法，2小于4，所以2将被插入4的左边的子树。4左边为null，所以建立新的节点new Node(2, null, null)，4的左侧指向新的节点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">       4   </div><div class="line">     /   \</div><div class="line">    2   null</div><div class="line">  /   \</div><div class="line">null  null</div></pre></td></tr></table></figure></p>
+<p>插入数字9，add(9). 因为root 不为 null, 所以我们调用add(9, root)。 进入私有add方法，9大于4，所以所以9将被插入4的右边的子树。4右边为null，所以建立新的节点new Node(9, null, null)，4的右侧指向新的节点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">            4  </div><div class="line">         /    \  </div><div class="line">       2       9</div><div class="line">    /   \     /   \</div><div class="line">null  null  null  null</div></pre></td></tr></table></figure></p>
+<p>插入数字5，add(5). 因为root 不为 null, 所以我们调用add(5, root)。 进入私有add方法，5大于4，所以所以5将被插入4的右边的子树。4右边的子树不为null，我们对5和4的右子树调用add方法。add(5, 9)。5小于9，所以5将被插入9左边的子树。9左边为null，所以我们建立新的节点new Node(5, null, null),使得9的左边指向这个新节点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">            4  </div><div class="line">         /    \  </div><div class="line">       2       9</div><div class="line">    /   \     /   \</div><div class="line">null  null   5   null</div><div class="line">           /  \</div><div class="line">        null  null</div></pre></td></tr></table></figure></p>
+<p>插入数字7，同样的调用和判断方式，7将被插入5的右侧子树。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">            4  </div><div class="line">         /    \  </div><div class="line">       2       9</div><div class="line">    /   \     /   \</div><div class="line">null  null   5   null</div><div class="line">           /  \</div><div class="line">        null   7</div><div class="line">             /   \ </div><div class="line">         null    null</div></pre></td></tr></table></figure></p>
+<p>这个例子的讲解比较繁琐和细致，基本体现到了每一行代码的执行过程。这样我们对于二叉树插入操作的递归方式应该就有了具体的了解。接下来我们来看看查找操作。</p>
+<h3 id="Search"><a href="#Search" class="headerlink" title="Search"></a>Search</h3><p>查找的代码跟插入十分的类似，基本逻辑是一样的。首先判断根节点的元素是否是查找的目标元素，不是的话就根据查找的目标和根节点的元素的比较关系判断应该向左右两侧哪一侧深入查找，然后用递归的方式查找子二叉树。我们来看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public boolean contains(final T t) &#123;</div><div class="line">    if (t == null || root == null)</div><div class="line">        return false;</div><div class="line">    else return contains(t, root);</div><div class="line">&#125;</div><div class="line"></div><div class="line">private boolean contains(final T t, final Node root) &#123;</div><div class="line">    if (root == null)</div><div class="line">        return false;</div><div class="line">    if (root.treasure.equals(t))</div><div class="line">        return true;</div><div class="line"></div><div class="line">    if (root.treasure.compareTo(t) &gt; 0)</div><div class="line">        return contains(t, root.left);</div><div class="line">    else return contains(t, root.right);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>与add方法一样，public的contains方法提供了一个接口，并对于根节点root调用了递归的私有contains方法。私有contains方法中递归的边界条件有两个，第一个是找到了尽头，即root等于null，这说明我们按照逻辑判断走到了尽头，依旧没有找到目标元素，则目标元素不存在。第二个边界条件则是当前root节点就包含着目标元素，则我们返回true表示目标元素存在。如果这两个边界条件都不满足，则说明我们目前还没有找到目标元素，我们需要继续向下查找，所以根据大小判断，我们来决定向左侧或者右侧递归深入。这里就不在给出具体例子和逐行代码运行解释了，可以按照上面add方法的例子来自行尝试。</p>
+<h3 id="Remove"><a href="#Remove" class="headerlink" title="Remove"></a>Remove</h3><p>删除的逻辑就要稍微复杂一点了。因为我们需要在删除了某个节点之后，整个二叉树必须要继续遵循我们订好的规律和要求。之前的例子中为了方便查看我们把为null的子节点也标示了出来，后面的例子将不再标示null。看下图中的例子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">     4  </div><div class="line">  /    \  </div><div class="line">2        9</div><div class="line">       /    \  </div><div class="line">     6       12</div><div class="line">   /  \     /  \</div><div class="line">  5    7   11   14</div></pre></td></tr></table></figure></p>
+<p>这颗二叉树是符合我们的逻辑的。即对于每一个节点，以这个节点为根节点的二叉树都符合这样的要求：左边的子树包含的数字一定小于这个根节点，右边的子树所包含的数字一定大于这个根节点。举例来说，我们看到数字9这个节点，那么以这个节点作为根节点的二叉树则包含了<code>{9,6,12,5,7,11,14}</code>这几个数字。那么在9左边的子树包含的数字是6，5和7，全部小于9，而右边子树包含的数字是12,11和14，则全部大于9。对于任意一个节点，这个规定都一定成立。那么当我们需要删除一个节点的时候，会发生什么情况呢？如果我们删除2 ，5，7，11 或者14，那么我们可以直接删除这些节点，因为这些节点在叶子上，它们都没有子节点，所以删除它们不会对树的特性有任何的影响，这棵树依旧会符合我们上述的要求和逻辑。但是如果我们试图删除节点9，那么会发生什么呢？二叉树的特性决定了一个节点如果有子节点，那么这个节点一定不能为空，因为我们需要这个节点的元素来进行比较，进而判断节点左右子树的大小规律。所以如果我们想要删除一个节点，那么我们必须要重新对二叉树的结构进行整理，来保障二叉树的性质不变。继续看图。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">     4  </div><div class="line">  /    \  </div><div class="line">2        删除9这个节点</div><div class="line">       /    \  </div><div class="line">     6       12</div><div class="line">   /  \     /  \</div><div class="line">  5    7   11   14</div></pre></td></tr></table></figure></p>
+<p>我们需要一个方法来从9的子树之中选出合适的数字填在被删除的节点的位置。具体做法我们后面来讲。现在我们来总结一下删除节点可能会遇见的几种情况：</p>
+<ol>
+<li>删除的节点没有子节点。</li>
+<li>删除的节点有一个子节点。</li>
+<li>删除的节点有两个子节点。</li>
+</ol>
+<p>我们来依次看这三种情况吧。</p>
+<h5 id="1-没有子节点的情况。"><a href="#1-没有子节点的情况。" class="headerlink" title="1. 没有子节点的情况。"></a>1. 没有子节点的情况。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">              /  \     /  \</div><div class="line">             5    7   11   14</div><div class="line"></div><div class="line">// 删除数字7</div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">              /        /  \</div><div class="line">             5        11   14</div></pre></td></tr></table></figure>
+<p>直接删除就可以了，6.right = null; 对于树的结构没有影响。</p>
+<h5 id="2-有一个子节点的情况"><a href="#2-有一个子节点的情况" class="headerlink" title="2. 有一个子节点的情况"></a>2. 有一个子节点的情况</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                7       12</div><div class="line">              /        /  \</div><div class="line">             6        11   14</div><div class="line">           /   \</div><div class="line">          5     8</div><div class="line"></div><div class="line">// 删除数字7</div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">              /  \     /   \</div><div class="line">             5    8   11    14</div></pre></td></tr></table></figure>
+<p>如果只有一个子节点，那么只要将子节点的整个树都放在被删除的节点的位置就可以了。这是因为，由于二叉树的性质，节点7由于在9的左侧，所以以7为根节点的树的全部元素都一定小于9，所以只要拿走7，并将7唯一的子节点放在7的位置上，这样二叉树就会保持原有的性质。</p>
+<h5 id="3-有两个子节点的情况"><a href="#3-有两个子节点的情况" class="headerlink" title="3. 有两个子节点的情况"></a>3. 有两个子节点的情况</h5><p>这个情况就会复杂一下，需要一些变换。依旧可以依靠递归的思想来解决问题。先来说一下基本逻辑：假设要被删除的节点为N，N节点有左右两个子树，则我们需要从子树中找到合适的数字来放在这个被删除的节点N。对于有两个子节点的情况，我们实际上不需要真的删除这个节点，我们可以替换节点中的数字。为了保证节点N左边的子树的数字都小于这个新数字，右边的子树的数字都大于这个新数字，我们有两个选择。我们可以从左树中找到最大的数字，或者从右树中找到最小的数字，放在N节点，这样的话N节点左右的子树就会依旧保证遵循同样的规律。但是用数字替换了N节点之后，子树中就出现了重复的数字，我们需要删除这个数字。我们可以用递归的思想，从子树中删除这个数字。我们用图像来看看两个节点的删除方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">              /  \     /  \</div><div class="line">             5    7   11   14</div><div class="line"></div><div class="line">// 删除数字9</div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        7 // 在这个例子中我们将使用左树最大值来代替被删除的节点。</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">              /  \     /  \</div><div class="line">             5    7   11   14</div><div class="line"></div><div class="line">// 用同样的方法删除7， 7没有子节点，则情况1的逻辑适用。</div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        7</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">              /        /  \</div><div class="line">             5        11   14</div></pre></td></tr></table></figure></p>
+<p>从这个例子中我们可以看到双子节点的删除逻辑。</p>
+<p>上面这三种类型就是删除节点的三种情况，我们来看代码如何实现这些逻辑。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public void remove(final T t) &#123;</div><div class="line">    root = remove(t, root);</div><div class="line">&#125;</div><div class="line"></div><div class="line">private Node remove(final T t, final Node root) &#123;</div><div class="line">    if (root == null)</div><div class="line">        return null;</div><div class="line">    else if (root.treasure.compareTo(t) &gt; 0)</div><div class="line">        root.left = remove(t, root.left);</div><div class="line">    else if (root.treasure.compareTo(t) &lt; 0)</div><div class="line">        root.right = remove(t, root.right);</div><div class="line">    else if (root.left != null &amp;&amp; root.right != null)&#123;</div><div class="line">        root.treasure = findMax(root.left);</div><div class="line">        root.left = remove(root.treasure, root.left);</div><div class="line">    &#125; else return root.left == null ? root.right : root.left;</div><div class="line">    return root;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private T findMax(Node root) &#123;</div><div class="line">    if (root.right != null)</div><div class="line">        return findMax(root.right);</div><div class="line">    return root.treasure;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>public的remove方法是一样的，是递归方法的入口。私有的findMax方法也很好理解，因为所有的节点都遵循大的数字放右边的规律，所以只需要一直向右走到尽头，该节点的数字就是这棵树的最大数字。代码的逻辑就是：如果右树不为空，则递归调用这个方法来获取右树的最大值。如果右树为空，则这个节点的数字就是最大数字，因为所有的左树的数字都小于根节点。来看这个私有的remove方法，这个方法的逻辑就稍微复杂了一点。为了简化逻辑和代码，我们用返回节点的方式来递归。这个方法接受一个元素和一个二叉树的根节点，然后返回去除了元素的二叉树。注意，这个方法是针对一个完整的二叉树设计的，也就是说只要给出元素t和二叉树的根节点root，这个方法就应该返回删除了t元素之后的二叉树。首先判断root是否为null，如果为null，说明这一个二叉树为空，我们可以直接返回null来代表这个空的二叉树。继续判断元素t和当前root.treasure的关系，t小则t有可能存在于root的左子树，反之则说明t可能会在root的右子树。之所以说t可能存在于子树，是因为也许当前树不包含t这个元素。继续往下看，确定了应当找寻的方向之后，我们需要一个方法来从子树中删除元素t，所以我们用递归的方式调用remove方法本身，且让root.子树 = remove(t, toot.子树)。remove会返回删除了元素t的二叉树，所以root.left = remove(t, root.left)或者root.right = remove(t, root.right) 就会让root的子树成为去除了元素t的二叉树。这里的逻辑稍微有点复杂，我们再来重新观察一下。首先，remove方法接受元素t和一个二叉树，然后返回删除了元素t的二叉树。所以，当root这棵树的左树包含了t，那么我们就可以使得root.left 等于remove(t, root.left)，这样root的左树就会成为删除了元素t的二叉树。让root的子树等于删除了元素t的二叉树之后，就可以返回root了，只不过我们把return root放在了最后一行。继续向下看，如果root.treasure既不大于t也不小于t，这说明当前节点就是包含了元素t的节点。那么，我们的三种情况就适用于这里了。如果左树和右树都不为null，那么我们应用第三种方法，我们使得当前root节点的元素等于左树的最大值，来保证二叉树的特性不被破坏，然后从root的左树中删除这个最大值。这里依旧递归调用remove(max_in_left, root.left)。如果左树或者右树有一个树为null，那么第二种情况就适用于这里，我们可以直接返回不为null的那个树。因为上一层的调用会使得对应的父节点的子树等于我们这一层返回的这颗树，那么这一层的root节点就会被删掉。大概逻辑是这样的：第一层 A.child = remove(n, A.child) -&gt; 第二层 return A.child.child -&gt; 第一层 A.child = A.child.child。这样，包含了目标元素t的A.child就会被删除。这就是删除的逻辑了。重点在于删除节点的三种不同的情况，和如何递归调用remove方法。</p>
+<h3 id="Modify"><a href="#Modify" class="headerlink" title="Modify"></a>Modify</h3><p>我们已经有了contains，remove和add方法，所以修改就变得十分的容易了。直接看代码吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public void modify(T oldT, T newT)&#123;</div><div class="line">    if (oldT == null || root == null || oldT.equals(newT))</div><div class="line">        return;</div><div class="line">    if(newT == null)</div><div class="line">        remove(oldT);</div><div class="line">    else if (contains(oldT))&#123;</div><div class="line">        remove(oldT);</div><div class="line">        add(newT);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>旧值和新值，如果旧值在树立，那么就删除旧值，插入新值。当然，效率并不高，读者可以自行实现一个修改的方法 :-)</p>
+<h2 id="Conclution-and-More"><a href="#Conclution-and-More" class="headerlink" title="Conclution and More"></a>Conclution and More</h2><p>在一开始的Node代码中，我们有一个toString的方法，如果你尝试调用的话，你会发现这个方法会按照从小到大的顺序打印出树中的全部数字或者元素。我们把代码拿出来单独看一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public String toString()&#123;</div><div class="line">    return Optional.ofNullable(left).map(node -&gt; node.toString()).orElse(&quot; &quot;) </div><div class="line">            + &quot; &quot; + treasure.toString() + &quot; &quot;</div><div class="line">            + Optional.ofNullable(right).map(node -&gt; node.toString()).orElse(&quot; &quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个方法直接来看有点复杂，我们先来变形一下以便于理解。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void print(Node root) &#123;</div><div class="line">    if (root == null)</div><div class="line">        return;</div><div class="line">    print(root.left);</div><div class="line">    System.out.print(&quot; &quot; + root.treasure);</div><div class="line">    print(root.right);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样就会容易很多。print接受一个二叉树，然后打印出该二叉树的全部数字。逻辑很简单，打印左侧子树，然后打印root节点，然后打印右侧子树。我们来看看实际运行的输出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public static void main(final String[] args) &#123;</div><div class="line">    final BinaryTree&lt;Integer&gt; bTree = new BinaryTree&lt;&gt;();</div><div class="line">    IntStream.range(0, 20).forEach(i -&gt; bTree.add((int)(Math.random()*20)));</div><div class="line">    bTree.print(bTree.root);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// output :  0 1 5 7 8 10 13 14 15 16 17 18 19</div></pre></td></tr></table></figure></p>
+<p>main方法中，我们对bTree进行了二十次插入操作，每次插入的数字都是介于0到20之间，所以实际插入的数字和个数都不确定。然后我们调用print方法来打印。因为打印方法是打印出左侧子树，然后打印根节点，最后打印右节点，所以打印出来的数字是有序的，按从小到大的顺序打印。因为递归调用的原因，当我们打印左侧子树的时候，我们实际上会尝试打印左侧子树的左侧子树，直到左侧是null。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">              /  \     /  \</div><div class="line">             5    7   11   14</div><div class="line"></div><div class="line">打印的顺序是左，中，右。所以输出是 2,4,5,6,7,9,11,12,14</div></pre></td></tr></table></figure></p>
+<p>这下toString方法也很好理解了吧？我们其实就是把左侧子树变成String，然后加上根节点的元素的String形式，再加上右子树。这样toString对于根节点调用返回的就是一个从小到大包含了全部数字的字符串。<br>以左，中，右的顺序访问这个树，就是传说中的中序。相应的，我们可以轻易地修改这些方法，改变访问的顺序。中，左，右的顺序就是先序，左，右，中的顺序就是后序。不同的访问方式，打印出来的元素的排列方式也是不相同的，感兴趣的小伙伴可以自行尝试。</p>
+<p>另外，现在我们已经知道二叉树是一层一层的结构了，那么我们怎样可以按行来打印出二叉树的元素呢？比如对于上面这棵树，我们如何打印出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">4</div><div class="line">2 9</div><div class="line">6 12</div><div class="line">5 7 11 14</div></pre></td></tr></table></figure></p>
+<p>这样的形式呢？下面的代码中我写出了答案，感兴趣的小伙伴也可以下载查看。当然，愿意自己思考并且尝试的话，就更好了。不过这需要我们认识一种新的数据结构，在下一篇文章中，我们将会讲一讲queue和stack，和它们可以应用的场景和算法。</p>
+<p><br>下面是这篇文章实现的二叉树，需要的读者可以尝试运行。<br><br>
+<button onclick="window.open('BinaryTree.java')">点我下载 BinaryTree.java</button>
+<br><br>谢谢阅读。<br></p>
+<p>　/) /)<br>ฅ(• - •)ฅ</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/data-structure/tags/data-structure/" rel="tag"># data structure</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/data-structure/2017/02/24/postRecursive/" rel="next" title="第1天的递归">
+                <i class="fa fa-chevron-left"></i> 第1天的递归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/data-structure/avatar.jpg"
+               alt="弦子" />
+          <p class="site-author-name" itemprop="name">弦子</p>
+          <p class="site-description motion-element" itemprop="description">I pledge my life and honor to the Programming, for this night and all the nights to come.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/data-structure/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/data-structure/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Binary-Tree"><span class="nav-number">1.</span> <span class="nav-text">Binary Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methodology"><span class="nav-number">1.3.</span> <span class="nav-text">Methodology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation"><span class="nav-number">1.4.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Insert"><span class="nav-number">1.4.1.</span> <span class="nav-text">Insert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search"><span class="nav-number">1.4.2.</span> <span class="nav-text">Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remove"><span class="nav-number">1.4.3.</span> <span class="nav-text">Remove</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-没有子节点的情况。"><span class="nav-number">1.4.3.0.1.</span> <span class="nav-text">1. 没有子节点的情况。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-有一个子节点的情况"><span class="nav-number">1.4.3.0.2.</span> <span class="nav-text">2. 有一个子节点的情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-有两个子节点的情况"><span class="nav-number">1.4.3.0.3.</span> <span class="nav-text">3. 有两个子节点的情况</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modify"><span class="nav-number">1.4.4.</span> <span class="nav-text">Modify</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclution-and-More"><span class="nav-number">1.5.</span> <span class="nav-text">Conclution and More</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">弦子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/data-structure/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/data-structure/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/data-structure/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

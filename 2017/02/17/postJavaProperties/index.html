@@ -1,0 +1,690 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/data-structure/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/data-structure/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/data-structure/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/data-structure/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Java encapsulation inheritance polymorphismAbstractjava是一门面向对象的语言，讲究封装继承和多态。不要被这些名字吓到，通过阅读本文，你应该会对这些概念有更直观的理解。本文会试着举出一些有趣而准确地例子帮助你接受并了解面向对象语言的一些共通的特性。
+Introduction面向对象是设计模式的一种。为了避免陷入到堆砌专业名词而使得初学者难以理解的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第1天的Java特性">
+<meta property="og:url" content="https://alex-mengx.github.io/2017/02/17/postJavaProperties/index.html">
+<meta property="og:site_name" content="Alex's data structure class">
+<meta property="og:description" content="Java encapsulation inheritance polymorphismAbstractjava是一门面向对象的语言，讲究封装继承和多态。不要被这些名字吓到，通过阅读本文，你应该会对这些概念有更直观的理解。本文会试着举出一些有趣而准确地例子帮助你接受并了解面向对象语言的一些共通的特性。
+Introduction面向对象是设计模式的一种。为了避免陷入到堆砌专业名词而使得初学者难以理解的">
+<meta property="og:updated_time" content="2017-03-02T02:31:36.185Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第1天的Java特性">
+<meta name="twitter:description" content="Java encapsulation inheritance polymorphismAbstractjava是一门面向对象的语言，讲究封装继承和多态。不要被这些名字吓到，通过阅读本文，你应该会对这些概念有更直观的理解。本文会试着举出一些有趣而准确地例子帮助你接受并了解面向对象语言的一些共通的特性。
+Introduction面向对象是设计模式的一种。为了避免陷入到堆砌专业名词而使得初学者难以理解的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/data-structure/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alex-mengx.github.io/2017/02/17/postJavaProperties/"/>
+
+
+
+
+
+  <title> 第1天的Java特性 | Alex's data structure class </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/data-structure/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Alex's data structure class</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/data-structure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/data-structure/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/data-structure/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alex-mengx.github.io/data-structure/2017/02/17/postJavaProperties/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="弦子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/data-structure/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Alex's data structure class">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Alex's data structure class" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第1天的Java特性
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-17T23:29:42-05:00">
+                2017-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java-encapsulation-inheritance-polymorphism"><a href="#Java-encapsulation-inheritance-polymorphism" class="headerlink" title="Java encapsulation inheritance polymorphism"></a>Java encapsulation inheritance polymorphism</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>java是一门面向对象的语言，讲究封装继承和多态。不要被这些名字吓到，通过阅读本文，你应该会对这些概念有更直观的理解。本文会试着举出一些有趣而准确地例子帮助你接受并了解面向对象语言的一些共通的特性。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>面向对象是设计模式的一种。为了避免陷入到堆砌专业名词而使得初学者难以理解的困境中，我们暂且不对设计模式进行解释。对于特性的名字也不必要去钻牛角尖，通过例子会有直观的感受，这比强行记住佶屈聱牙的定义要容易且有效很多。作为程序员，我们的准则就是高效且准确，所以就让我们进入到Java的世界，用代码和例子来代替文字定义吧。</p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>首先我们来通过例子理解封装，继承和多态的大概含义。这些概念之间有着密切的相互联系，让我们一个一个慢慢来看。</p>
+<h3 id="Encapsulation"><a href="#Encapsulation" class="headerlink" title="Encapsulation"></a>Encapsulation</h3><p>封装，顾名思义，把内部的东西包裹起来，封住具体的细节，只保留必要的接口。这既是出于安全角度考虑，同样也会使得开发的过程变得不易出错且易于修改。为什么封装会有这样的效果呢？我们来举例说明吧。<br>想象一台ATM取款机，这个取款机就是一个封装的很好的系统，我们只能通过操作界面(interface)来操作。现在我们把这个取款机当做一个Java的类，然后把取款机的方法列举出来看看我们都有什么。取款机最基本的功能就是输入密码取钱存钱， 我们先无视掉别的功能，来写一个Java的类实现输入密码取钱存钱的功能，并且来看看封装能带来什么好处。为了简化这个模型，我们假设你是一个超级重要的VIP客户，银行在你家里设立了一台定制的ATM取款机，这个ATM只有你一个人可以使用，里面只保存了你一个人的信息，只要输对了密码就能取钱，里面也只有你一个人的余额信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public class ATM &#123;</div><div class="line">    public String password = &quot;p@ssw0rd&quot;;</div><div class="line">    public int balance = 0;;</div><div class="line"></div><div class="line">    public ATM() &#123;&#125;</div><div class="line"></div><div class="line">    public void withdraw(String password, int howMuch) &#123;</div><div class="line">        if (this.password.equals(password)) &#123;</div><div class="line">            if (balance &gt; howMuch) &#123;</div><div class="line">                balance -= howMuch;</div><div class="line">                System.out.println(&quot;Withdraw &quot; + howMuch + &quot;, you have remaining balance &quot; + balance);</div><div class="line">            &#125; else</div><div class="line">                System.out.println(&quot;Insufficient balance! Only has &quot; + balance + &quot; left!&quot;);</div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Authorization Error!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void save(String password, int howMuch) &#123;</div><div class="line">        if (this.password.equals(password)) &#123;</div><div class="line">            balance += howMuch;</div><div class="line">            System.out.println(&quot;Save &quot; + howMuch + &quot;, you have remaining balance &quot; + balance);</div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Authorization Error!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int query(String password) &#123;</div><div class="line">        if (this.password.equals(password)) &#123;</div><div class="line">            return balance;</div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Authorization Error!&quot;);</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>好，上面就是一个很简单的ATM的实现，银行建立一个包含了初始密码和0余额的ATM，放在你家里，你就可以开始使用了。我们可以看到，这个ATM实现了三个方法，分别是存款(save)，取款(withdraw)和查询余额(query)。 下面我们来试着存钱取钱试试看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) &#123;</div><div class="line">    ATM atm = new ATM();</div><div class="line">    atm.save(&quot;wrong&quot;, 100); //错误的密码</div><div class="line">    System.out.println(&quot;I have &quot; + atm.query(&quot;p@ssw0rd&quot;) + &quot; in ATM.&quot;); //正确的密码查余额</div><div class="line">    atm.save(&quot;p@ssw0rd&quot;, 100); // 存100</div><div class="line">    System.out.println(&quot;I have &quot; + atm.query(&quot;p@ssw0rd&quot;) + &quot; in ATM.&quot;);</div><div class="line">    atm.withdraw(&quot;p@ssw0rd&quot;, 50); //取50</div><div class="line">    System.out.println(&quot;I have &quot; + atm.query(&quot;p@ssw0rd&quot;) + &quot; in ATM.&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">输出：</div><div class="line">Authorization Error!</div><div class="line">I have 0 in ATM.</div><div class="line">Save 100, you have remaining balance 100</div><div class="line">I have 100 in ATM.</div><div class="line">Withdraw 50, you have remaining balance 50</div><div class="line">I have 50 in ATM.</div></pre></td></tr></table></figure></p>
+<p>我们看到，输入密码，我们就可以存钱取钱。但是，这个系统真的安全吗？如果我们直接修改密码或者余额，会发生什么呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">atm.password = &quot;&quot;;</div><div class="line">atm.balance = 9999;</div><div class="line">System.out.println(&quot;I have &quot; + atm.query(&quot;&quot;) + &quot; in ATM.&quot;);</div><div class="line"></div><div class="line">输出：</div><div class="line">I have 9999 in ATM.</div></pre></td></tr></table></figure></p>
+<p>啊哈，直接修改余额，我们现在有了9999的余额，而且密码变成了空白。显然，这个ATM十分的不安全，我们不用通过操作界面也就是系统提供的那些方法，就可以对数据进行操作。那么，我们来试着封装一下这个ATM。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public class ATM &#123;</div><div class="line">    private String password = &quot;p@ssw0rd&quot;; //修改为private</div><div class="line">    private int balance = 0;</div></pre></td></tr></table></figure></p>
+<p>我们为这两个元素添加了private关键字。现在再试着运行同样的程序，我们会看到这样的错误提示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">The field ATM.password is not visible</div><div class="line">The field ATM.balance is not visible</div></pre></td></tr></table></figure></p>
+<p>这下我们的ATM就安全多啦！这两个元素的可见性从公共的程度降低到了私有，也就是说，除了ATM机这个class的内部方法以外，没有别的方法可以读取和修改你的密码和余额啦！下面是这个ATM的Java代码，包含了存款取款修改密码和查询功能，有兴趣的小伙伴可以下载之后修改余额和密码的可见性，做一些其他的尝试。<br>
+<button onclick="window.open('ATM.java')">点我下载 ATM.java</button>
+<br>封装的概念比较容易理解，实际上就是控制外部对于类内部数据的访问，为了保证安全，我们尽量使得内部的数据私有化(private)，使外部用户只能通过规定的public方法来进行操作。表现在以上的例子中就是ATM中的密码，只能通过changePassword方法来修改，这就要求用户输入正确的密码，而不是可以随意对ATM内部的密码变量进行直接修改。封装的概念在下文中还会被多次提及，因为Java的特性大多数时候是相互影响的，我们会通过例子来看到这些变化和影响。</p>
+<h3 id="Inheritance"><a href="#Inheritance" class="headerlink" title="Inheritance"></a>Inheritance</h3><p>继承，算是Java最重要的特性之一。他的意思很简单，父亲有的东西，儿子一样会有。举例来说，假如你是一个造船厂的老板，你可以生产帆船，汽油机船和人力船三种船。生产每一种船都很耗费时间，所以每次拿到订单工期都会很赶，而没有订单的时候工人们又很闲。但是你是一个很聪明的老板，你发现，这三种船可以使用同一个模具建造出来的基本款船，只要加上船帆，发动机或者船桨，就会成为不同的产品。于是，闲暇时期你开始生产基本款，而接到订单后，只需要根据数量来安装对应的模块，就会很高效的完成订单。在这个例子中，三种成品都是继承于船体这个父类，生产中可以节约完成订单的时间，而表现在代码中则是很多代码都可以重复使用，而不需要重新编写。<br>现在，你应该对于继承有了一个大概的感觉，似乎明白了什么是继承，但是又无法跟代码联系起来。不要紧，下面我们就回到ATM的例子，来试着用代码表现出继承这一特性。上面的例子中，ATM是针对你这个超级VIP设计的，他可以满足你存取款修改密码查询余额的要求。假设现在我们又有了一个超级VIP，他不仅要求以上这些功能，同时他还需要转账功能，我们该怎么办呢？ATM不能被修改，因为你这个VIP还在使用，那我们是不是应该重新制作一个不一样的ATM呢？这种时候，继承的优点就表现出来了。让我们来建立一个可以转账的TransATM吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class TransATM extends ATM &#123;</div><div class="line"></div><div class="line">    public void transferTo(String password, int howMuch, long toAccount) &#123;</div><div class="line">        if (this.password.equals(password)) &#123;</div><div class="line">            if (this.balance &gt;= howMuch) &#123;</div><div class="line">                this.balance -= howMuch;</div><div class="line">                System.out.println(&quot;Successfully transferred &quot; + howMuch + &quot; to the account &quot; + toAccount + &quot; , balance is &quot; + balance);</div><div class="line">            &#125; else</div><div class="line">                System.out.println(&quot;Insufficient balance! Only has &quot; + balance + &quot; left!&quot;);</div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Authorization Error!&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个TransATM继承了ATM的全部non-private的元素和方法。但是你会发现，当你调用这个transferTo方法的时候，Java会提醒你<code>The field ATM.password is not visible</code>。这是为什么呢？答案很简单，这个方法中this.password试图调用的是ATM这个父类当中的password变量，而这个变量我们为了安全性将可视性变为了private，所以就算是ATM的子类，这个变量也是不可见得。将ATM中的这两个变量修改为默认default，这个TransATM就可以正常工作了，而ATM的这两个变量的可视性则增加到了包，也就是在同一个package内的类都可以访问这两个变量了。在封装的部分中我们为了安全而将其设置成了私有，这里为了能够使得子类继承到这两个变量，我们修改了变量的可见性，这自然会降低安全性。那么，有没有什么办法能够既保证安全，又能减少重复劳动呢？复制黏贴代码并不是一个好习惯，让我们从设计的角度来思考一下更加可行的解决方法吧。<br>上文中的这个TransATM和ATM类的关系是父子关系，可以说TransATM “is-a” ATM，非私有的方法和元素都可以被继承。这是一种“是”的关系，例如玛莎拉蒂和五菱宏光都是车，他大舅他二舅都是他舅，这就是典型的“是”关系。除了“是”以外，我们还可以有“has-a”的关系。比如，玛莎拉蒂有发动机，帆船有帆，这都是有的关系。具体到我们ATM的例子，我们可以用有的关系来尝试解决这个问题。想象一下，我们为了节省工作负荷，再生产TransATM的时候，我们将一台ATM内嵌到了TransATM之中，然后增加了新的模块来实现转账功能，这也是继承关系的一种，是“有”的关系。来看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">public class TransATM &#123;</div><div class="line">    private String password = &quot;transP@ssw0rd&quot;;</div><div class="line">    private ATM atm;</div><div class="line">    </div><div class="line">    public TransATM() &#123;</div><div class="line">        this.atm = new ATM();</div><div class="line">        atm.changePassword(&quot;p@ssw0rd&quot;, this.password);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void withdraw(String password, int howMuch) &#123;</div><div class="line">        atm.withdraw(password, howMuch);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void save(String password, int howMuch) &#123;</div><div class="line">        atm.save(password, howMuch);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public int query(String password) &#123;</div><div class="line">        return atm.query(password);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void changePassword(String password, String newPassword) &#123;</div><div class="line">        atm.changePassword(password, newPassword);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void transferTo(String password, int howMuch, long toAccount) &#123;</div><div class="line">        if (this.password.equals(password)) &#123;</div><div class="line">            if ( atm.query(password) &gt;= howMuch) &#123;</div><div class="line">                atm.withdraw(password, howMuch);</div><div class="line">                System.out.println(&quot;Successfully transferred &quot; + howMuch + &quot; to the account &quot; + toAccount + &quot; , balance is &quot; + atm.query(password));</div><div class="line">            &#125; else</div><div class="line">                System.out.println(&quot;Insufficient balance! Only has &quot; + atm.query(password) + &quot; left!&quot;);</div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Authorization Error!&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们可以看到，这个TransATM实际上就是给ATM套了一个外壳，但是安全性有了很大的提升，不仅可以有不同的初始密码，密码变量和内部的atm对于用户也是不可见的。这就是封装和继承之间的平衡。找准主要需求，在设计上进行改变来满足需求是程序员解决问题的必要思路。从这个例子中我们可以看到由于ATM类原本不是为了可延展设计的，所以在继承方面需要我们或者改变可见度，或者改变继承的类型来适应。那么，如果一开始就是为了可以延展而设计，这些ATM可以有哪些改变呢？</p>
+<h3 id="Polymorphism"><a href="#Polymorphism" class="headerlink" title="Polymorphism"></a>Polymorphism</h3><p>因为你和你的小伙伴太成功了，越来越多的定制ATM需求被提了出来。于是银行发现，为了满足这些定制的ATM，要么每一次都重新开发，要么就要对已经投入使用的ATM进行修改。修改正在使用的ATM会导致你们这些超级VIP的ATM也需要更新修改，代价过于高昂，于是银行打算从头来设计一套易于延伸，便与定制同时还要安全稳定的ATM标准，来作为以后ATM的设计方案基础。这就涉及到了多态的特性。首先我们暂时放下ATM的这些事情，先来了解一下interface的概念。interface，就是接口，也是Java的常用关键字之一。它所表示的意思跟它的字面意思是一样的，表示它所标示的是一系列类型的共同操作方式。接口，顾名思义，是指一个系统接受输入和输出的部分。我们来举几个简单的例子帮助理解。假设我们要实现一些class，这些class都有一些共同的方法，那么我们就可以定义一个interface来表示这个共同的方法。比如我们有dog,cat,他们都会摇尾巴，我们就可以定义一个interface来定义摇尾巴这个动作，但凡有新的动物会摇尾巴，我们就可以要求这个动物implements这个interface。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">interface ShakeTail &#123;</div><div class="line">    public void shakeTail();</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Dog implements ShakeTail&#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void shakeTail() &#123;</div><div class="line">        System.out.println(&quot;dog shake tail&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Cat implements ShakeTail &#123;</div><div class="line">    </div><div class="line">    @Override</div><div class="line">    public void shakeTail() &#123;</div><div class="line">        System.out.println(&quot;cat shake tail&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面这个例子里，dog和cat在定义中包含了ShakeTail的接口，所以他们必须要实现shakeTail这个方法。但是interface只是一个接口，不能有具体的实现，如果我们想要一个interface，同时需要包含一些可以通用的方法，那么我们可以使用abstract类。abstract类跟普通类很相似，区别在于abstract类不能实例化，也就是不能‘new’。只有子类extends abstract类，子类才可以被实例化。来看具体例子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">abstract class Animal &#123;</div><div class="line"></div><div class="line">    public void move() &#123;</div><div class="line">        System.out.println(&quot;Animal move&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Dog extends Animal &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的Dog类继承了Animal类中的move方法，所以<code>new Dog().move()</code>会调用Animal中的move方法。那么什么时候用抽象（abstract）类，什么时候用接口呢？这里实际上依旧是上文描述过的”is-a”和”has-a”的关系。如果你有一类的东西，那么你可以给这一类的东西归类成一个抽象类。比如我们有猫，有狗，有鸟，我们就可以有一个抽象的动物类，然后实现一些全体动物共同的特性。而当某几类的动物有共同的特征时，我们可以为这个特征建立接口，有这一特征的动物就可以实现这个接口。依旧来看例子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">abstract class Animal &#123;</div><div class="line">    public void move() &#123;</div><div class="line">        System.out.println(&quot;Animal move&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">interface LickPaw &#123;</div><div class="line">    public void lickpaw();</div><div class="line">&#125;</div><div class="line"></div><div class="line">interface ShakeTail &#123;</div><div class="line">    public void shakeTail();</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Dog extends Animal implements ShakeTail &#123;</div><div class="line">    @Override</div><div class="line">    public void shakeTail() &#123;</div><div class="line">        System.out.println(&quot;dog shake tail&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Cat extends Animal implements ShakeTail, LickPaw&#123;</div><div class="line">    @Override</div><div class="line">    public void shakeTail() &#123;</div><div class="line">        System.out.println(&quot;cat shake tail&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void lickpaw() &#123;</div><div class="line">        System.out.println(&quot;cat lick paw&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static void main(String[] args) &#123;</div><div class="line">    shakeTail(new Cat());</div><div class="line">    move(new Dog());</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void shakeTail(ShakeTail l) &#123;</div><div class="line">    l.shakeTail();</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void move(Animal a) &#123;</div><div class="line">    a.move();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们从上往下依次来看。首先我们定义了一个抽象的Animal类，包含了一个move的方法。这个类是无法‘new’实例化（instantiation）的。然后我们定义了舔爪子和摇尾巴两个接口。为什么Animal是抽象类而这两个接口是接口呢？因为我们将要定义的类将‘是’动物，而‘有’某些接口定义的方法。所以我们可以说猫是动物，可以舔爪子，而不能反过来。如果我们要创建抽象类是猫，而定义的多个类是各种猫，那么‘舔爪子’这个方法就应该放在抽象类猫之中了。下面的猫和狗我们可以看到，都是动物类的子类，都有摇尾巴的方法，而猫则多出了舔爪子的方法。这样做的优点有几种。首先是代码的重复利用，Animal中的方法猫狗都可以直接调用，而不用重新写。另外是看最下面的方法，<code>new Dog()</code> 可以被只接受Animal的方法接受，<code>new Cat()</code> 也可以被只接受ShakeTail的方法接受。这是因为dog一定是Animal，包含了Animal能被外部调用的全部方法和元素，所以Animal能被看见的能被调用的，dog一定也有。而Cat实现了ShakeTail，所以ShakeTail规定的方法Cat一定全部都实现了，所以对于接受ShakeTail的方法，Cat一定包含了对其对应方法的实现。这样带来的好处有很多，比如Java的executor，你可以有各类job的实现，然后executor只要调用job的run方法，就可以完成各类工作，而不需要了解不同job的具体实现。我们来看用这种抽象思想实现的ATM。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line">abstract class AbstractATM &#123;</div><div class="line">    </div><div class="line">    protected abstract Map&lt;String, Account&gt; getAccounts();</div><div class="line"></div><div class="line">    public void openAccount(String username, String password) &#123;</div><div class="line">        getAccounts().put(username, new Account(password, 0));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void withdraw(String username, String password, int howMuch) &#123;</div><div class="line">        Account account = getAccounts().get(</div><div class="line">                Optional.ofNullable(username).orElseThrow(() -&gt; new IllegalArgumentException(&quot;Please input user name.&quot;)));</div><div class="line"></div><div class="line">        if (account.getPassword().equals(password)) &#123;</div><div class="line">            int balance = account.getBalance();</div><div class="line">            if (balance &gt;= howMuch) &#123;</div><div class="line">                account.setBalance(balance - howMuch);</div><div class="line">                System.out.println(&quot;Withdraw &quot; + howMuch + &quot;, you have remaining balance &quot; + account.getBalance());</div><div class="line">            &#125; else &#123;</div><div class="line">                System.out.println(&quot;Insufficient balance! Only has &quot; + balance + &quot; left!&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Wrong password!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void save(String username, String password, int howMuch) &#123;</div><div class="line">        Account account = getAccounts().get(</div><div class="line">                Optional.ofNullable(username).orElseThrow(() -&gt; new IllegalArgumentException(&quot;Please input user name.&quot;)));</div><div class="line"></div><div class="line">        if (account.getPassword().equals(password)) &#123;</div><div class="line">            int balance = account.getBalance();</div><div class="line">            account.setBalance(balance + howMuch); </div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Wrong password!&quot;);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Integer query(String username, String password) &#123;</div><div class="line">        Account account = getAccounts().get(</div><div class="line">                Optional.ofNullable(username).orElseThrow(() -&gt; new IllegalArgumentException(&quot;Please input user name.&quot;)));</div><div class="line">        if (account.getPassword().equals(password)) &#123;</div><div class="line">            return account.getBalance(); </div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Wrong password!&quot;);</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void changePassword(String username, String password, String newPassword) &#123;</div><div class="line">        Account account = getAccounts().get(</div><div class="line">                Optional.ofNullable(username).orElseThrow(() -&gt; new IllegalArgumentException(&quot;Please input user name.&quot;)));</div><div class="line">        if (account.getPassword().equals(password)) &#123;</div><div class="line">            account.setPassword(newPassword);</div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Wrong password!&quot;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    protected class Account &#123;</div><div class="line">        </div><div class="line">        private String password;</div><div class="line">        private int balance;</div><div class="line">        </div><div class="line">        protected Account(String password, int balance) &#123;</div><div class="line">            this.password = password;</div><div class="line">            this.balance = balance;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        protected int getBalance() &#123;</div><div class="line">            return balance;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        protected String getPassword() &#123;</div><div class="line">            return password;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        protected void setBalance(int balance) &#123;</div><div class="line">            this.balance = balance;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        protected void setPassword(String password) &#123;</div><div class="line">            this.password = password;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个抽象类就是ATM的原型机，我们可以看到他实现了全部的基本操作，同时用一个可以被override的方法来从子类中获得账户信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class TransferATM extends AbstractATM &#123;</div><div class="line">    private Map&lt;String, Account&gt; accounts;</div><div class="line"></div><div class="line">    public TransferATM(String username, String password) &#123;</div><div class="line">        super();</div><div class="line">        accounts = new HashMap&lt;&gt;();</div><div class="line">        accounts.put(username, new Account(password, 0));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected Map&lt;String, Account&gt; getAccounts() &#123;</div><div class="line">        return accounts;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void transferTo(String username, String password, int howMuch, long toAccount) &#123;</div><div class="line">        Account account = getAccounts().get(</div><div class="line">                Optional.ofNullable(username).orElseThrow(() -&gt; new IllegalArgumentException(&quot;Please input user name.&quot;)));</div><div class="line"></div><div class="line">        if (account.getPassword().equals(password)) &#123;</div><div class="line">            int balance = account.getBalance();</div><div class="line">            if (balance &gt;= howMuch) &#123;</div><div class="line">                account.setBalance(balance - howMuch);</div><div class="line">                System.out.println(&quot;Transfer &quot; + howMuch + &quot; to account &quot; + toAccount + &quot;, you have remaining balance &quot; + account.getBalance());</div><div class="line">            &#125; else &#123;</div><div class="line">                System.out.println(&quot;Insufficient balance! Only has &quot; + balance + &quot; left!&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125; else</div><div class="line">            System.out.println(&quot;Wrong password!&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个子类就是具体的ATM实现，override了getAcccount方法，所以父类中的方法可以获得子类中的账户信息。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>今天我们回顾了Java的部分特性，了解了继承多态和封装的基本概念。我们来总结一下。封装是为了安全，良好的系统应该接近黑盒，用户需要根据文档学习使用，而系统内部的运作方式和数据处理过程对外部来说是不可见的。良好的封装不仅增加安全性，同时会降低系统的复杂度，减低用户学习的难度。继承是指类与类之间的关系，而概念跟字面意思是一致的。除了private的方法和元素之外，子类可以继承父类的其他元素，提高代码的重复使用率。多态是指同一个签名拥有不同的实现方法，根据不同场景，可以选择对应的实现方法。这些特性相辅相成，相互影响，共同构成了安全高效的系统。</p>
+<p>　/) /)<br>ฅ(• - •)ฅ</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/data-structure/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/data-structure/2017/02/15/hello-world/" rel="next" title="第0天的Hello World!">
+                <i class="fa fa-chevron-left"></i> 第0天的Hello World!
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/data-structure/2017/02/24/postRecursive/" rel="prev" title="第1天的递归">
+                第1天的递归 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/data-structure/avatar.jpg"
+               alt="弦子" />
+          <p class="site-author-name" itemprop="name">弦子</p>
+          <p class="site-description motion-element" itemprop="description">I pledge my life and honor to the Programming, for this night and all the nights to come.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/data-structure/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/data-structure/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-encapsulation-inheritance-polymorphism"><span class="nav-number">1.</span> <span class="nav-text">Java encapsulation inheritance polymorphism</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation"><span class="nav-number">1.3.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encapsulation"><span class="nav-number">1.3.1.</span> <span class="nav-text">Encapsulation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inheritance"><span class="nav-number">1.3.2.</span> <span class="nav-text">Inheritance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polymorphism"><span class="nav-number">1.3.3.</span> <span class="nav-text">Polymorphism</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">弦子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/data-structure/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/data-structure/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/data-structure/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

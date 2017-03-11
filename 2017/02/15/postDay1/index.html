@@ -1,0 +1,708 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/data-structure/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/data-structure/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/data-structure/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="data structure," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/data-structure/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="LinkedListAbstractLinkedList - it is a linked list.
+Introduction链表 （ linkedlist） 是常见的数据结构之一。顾名思义，链表由一个一个的节点链接而成。每一个节点，都包含了承载的数据，以及一个指向下一个节点的指针。我们可以通过想象力来帮助我们理解这个数据结构是如何构成的。想象一下儿时玩过的藏宝游戏。你的父亲给了你一张小纸条，上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第1天的LinkedList">
+<meta property="og:url" content="https://alex-mengx.github.io/2017/02/15/postDay1/index.html">
+<meta property="og:site_name" content="Alex's data structure class">
+<meta property="og:description" content="LinkedListAbstractLinkedList - it is a linked list.
+Introduction链表 （ linkedlist） 是常见的数据结构之一。顾名思义，链表由一个一个的节点链接而成。每一个节点，都包含了承载的数据，以及一个指向下一个节点的指针。我们可以通过想象力来帮助我们理解这个数据结构是如何构成的。想象一下儿时玩过的藏宝游戏。你的父亲给了你一张小纸条，上">
+<meta property="og:image" content="https://alex-mengx.github.io/LinkedList_Insertion.jpg">
+<meta property="og:image" content="https://alex-mengx.github.io/LinkedList_RemoveFirst.jpg">
+<meta property="og:image" content="https://alex-mengx.github.io/LinkedList_Search.jpg">
+<meta property="og:image" content="https://alex-mengx.github.io/LinkedList_Remove.jpg">
+<meta property="og:updated_time" content="2017-02-18T05:22:17.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第1天的LinkedList">
+<meta name="twitter:description" content="LinkedListAbstractLinkedList - it is a linked list.
+Introduction链表 （ linkedlist） 是常见的数据结构之一。顾名思义，链表由一个一个的节点链接而成。每一个节点，都包含了承载的数据，以及一个指向下一个节点的指针。我们可以通过想象力来帮助我们理解这个数据结构是如何构成的。想象一下儿时玩过的藏宝游戏。你的父亲给了你一张小纸条，上">
+<meta name="twitter:image" content="https://alex-mengx.github.io/LinkedList_Insertion.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/data-structure/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alex-mengx.github.io/2017/02/15/postDay1/"/>
+
+
+
+
+
+  <title> 第1天的LinkedList | Alex's data structure class </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/data-structure/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Alex's data structure class</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/data-structure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/data-structure/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/data-structure/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alex-mengx.github.io/data-structure/2017/02/15/postDay1/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="弦子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/data-structure/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Alex's data structure class">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Alex's data structure class" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第1天的LinkedList
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-15T20:28:46-05:00">
+                2017-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>LinkedList - it is a linked list.</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>链表 （ linkedlist） 是常见的数据结构之一。顾名思义，链表由一个一个的节点链接而成。每一个节点，都包含了承载的数据，以及一个指向下一个节点的指针。我们可以通过想象力来帮助我们理解这个数据结构是如何构成的。<br>想象一下儿时玩过的藏宝游戏。你的父亲给了你一张小纸条，上面写了一个地址 - 也许是卧室的窗台上，也许是长廊的过道边  - ， 游戏就由此开始了。 你来到了纸条上描述的位置，发现了一块美味的糖果，和另一张写着其他地址的纸条，于是你吃掉了糖果，向着下一个目的地出发。每个目的地都有一些宝藏，也许是糖果，也许是玩具，最重要的是都会有一张写着地址的小纸条。 你可以一直找寻下去，直到有一天，你抵达了这条链的终点，那里不再有写着地址的纸条，只有父亲在微笑的看着你。<br>这就是一条典型的链表，每个藏着宝藏的地点就是链表的一个节点，写着地址的纸条则成为了指向下一个节点的指针。一个有限长度的链表必然存在着头和尾，在上文的例子中，第一张纸条可以被看做链表头，而没有纸条的最后一个藏宝点则是链表尾。</p>
+<h2 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a>Methodology</h2><p>这篇博文将用Java来一步一步实现一个拥有基本功能的链表来帮助读者理解这个结构。<br>首先，我们先为藏宝点建立格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class Node&#123;</div><div class="line">    E treasure;</div><div class="line">    Node next;</div><div class="line"></div><div class="line">    public Node(E treasure, Node next) &#123;</div><div class="line">        this.treasure = treasure;</div><div class="line">        this.next = next;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样，一个简单的节点就建立起来了。treasure 可以是任何类型的元素，可以是其他object，也可以是数字或者字符串， 而next则指向了Node这个类。在实例中，next将会指向其他的Node实例。<br>有了藏宝的点，我们现在需要建立我们的第一张写着地址的小纸条了，这个纸条将会成为链表的头，所有的操作都将会通过这个小纸条来进行，它将是我们唯一的接入点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class LinkedList&lt;E&gt; &#123;</div><div class="line">    Node root;</div><div class="line">    </div><div class="line">    class Node&#123;</div><div class="line">        E treasure;</div><div class="line">        Node next;</div><div class="line"></div><div class="line">        public Node(E treasure, Node next) &#123;</div><div class="line">            this.treasure = treasure;</div><div class="line">            this.next = next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个LinkedList类，就是我们的链表，而类元素root，则成为了我们可以接入这条链表的接入点。<br>现在我们有了一个框架，那么是时候为这条链表增加一些方法了。</p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>从上文的例子和部分实现中，我们已经对链表有了一个抽象的认识。那么链表的操作该如何完成呢？<br>下面我们来一步一步的增加增删改查这些常用的方法。</p>
+<h3 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h3><p>最简单的插入方式，就是从头部插入新的节点。假设目前你手里握着第一张纸条，那么增加一个新的藏宝点到这个长链中的最简单的的方式则是建立一个新的藏宝点，把你手中的纸条藏在哪里，然后拿出一张新的纸条，记录下来这个新的藏宝点的地址。 这个操作完成之后，新的节点会成为链表的头，而原先的链表头则成为了链中的第二个节点。</p>
+<p></p><p align="center"><br>  <img src="LinkedList_Insertion.jpg"><br>  <b>LinkedList insertion operation chart 1.</b><br></p><br>上图解释了插入的过程。基本上可以分为两步：<p></p>
+<ol>
+<li>新建一个Node，这个Node的next指向原本的root节点。</li>
+<li>断开原本的头部，指向新建的节点。</li>
+</ol>
+<p>这样，一个节点的插入操作就完成了。我们来看一下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void add(E e) &#123;</div><div class="line">    if (root == null)&#123;</div><div class="line">        root = new Node(e, null);</div><div class="line">    &#125; else &#123;</div><div class="line">        root = new Node(e, root);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注意这个if条件是因为当这个链表为空的时候，这个root是null值，没有next元素，所以只需要让root指向新建的节点就可以了。当链表已经有了至少一个元素的时候，我们才需要断开root -&gt; node，然后新节点的next指向node， root指向新节点.</p>
+<h3 id="RemoveFirst"><a href="#RemoveFirst" class="headerlink" title="RemoveFirst"></a>RemoveFirst</h3><p>取出并删除头结点的过程和插入类似，只要将root指向root.next就可以了。看图会清晰一点。</p>
+<p></p><p align="center"><br>  <img src="LinkedList_RemoveFirst.jpg"><br>  <b>LinkedList removeFirst operation chart 2.</b><br></p><br>这个操作只需要一步就可以完成。代码如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public E removeFirst()&#123;</div><div class="line">    if (root == null)&#123;</div><div class="line">        return null;</div><div class="line">    &#125; else &#123;</div><div class="line">        E e = root.treasure;</div><div class="line">        root = root.next;</div><div class="line">        return e;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>if检查在这里也是很必要的，因为当这个链表为空的时候，任何涉及root内部元素的操作都会抛出NullpointerException。只有不为空的链表，我们才可以取出其中的元素，如同一个没有地址的纸条，自然没有办法为我们指向宝藏的位置。</p>
+<h3 id="Search"><a href="#Search" class="headerlink" title="Search"></a>Search</h3><p>查找链表中的元素是很常用的操作。但是这个数据结构对于查找并不是很友好。从上面插入和删除第一个元素的操作，我们可以看出来，无论这个链表中有多少的元素，我们都只需要对root进行操作。也就是说，无论这个链表内部元素的数量N有多庞大，插入和删除第一个元素的操作耗费的时间总是一定的。这一类与N无关的操作我们称之为O(1)操作。在这里我们不多涉及O（）这一表现形式，在未来的文章中我们会进一步解释这个符号的含义以及在算法中代表的意义。<br>话题回到链表的查找操作。由介绍部分的例子我们可以看出，对于链表，我们的访问总是从头部开始的。无论有多少宝藏和藏宝的地点，我们只能从手中的纸条所给出的第一个地点一步一步寻找下去。对于   root -&gt; A -&gt; B -&gt; C -&gt; D 这条链来说，没有到达B之前，我们没有办法知道C在哪里。这就给搜索带来了很多的麻烦。<br>回到开头的例子。 我们想从宝藏中找到竹蜻蜓，那么我们该怎么做？逻辑很简单:<br><b>我们所在的藏宝点收藏的是竹蜻蜓吗？</b></p>
+<ol>
+<li>是。很好，我们找到了。</li>
+<li>不是，我们去下一个地点。</li>
+</ol>
+<p>继续看图来帮助理解。</p>
+<p></p><p align="center"><br>  <img src="LinkedList_Search.jpg"><br>  <b>LinkedList search operation chart 3.</b><br></p><br>代码的逻辑并不复杂。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public boolean search(E e) &#123;</div><div class="line">    Node current = root;</div><div class="line">    while (current != null)&#123;</div><div class="line">        if (current.treasure.equals(e))</div><div class="line">            return true;</div><div class="line"></div><div class="line">        current = current.next;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>让我们用语言来复述一遍这个方法的具体逻辑，这有助于理解。<br>首先，我们不希望破坏现有的数据和结构，所以我们不对root和其他链表内的元素进行操作。我们用一个current来表示我们当前所在的藏宝点的位置，这个current起始点则是root。 下面我们就踏上了寻宝之旅。在走完全部的旅途之前，没有人知道将会遇到什么，所以我们需要这个while loop 一直持续，直到current成为null也就是到达终点为止。在遍历的过程中，我们不断比较，当前current的treasure元素是否是我们所寻找的？如果是，那说明我们找到了，只要返回true就好，这会打破while loop，并从方法中返回。如果不是，我们则使current指向current.next，也就是我们的下一个目标点。当current成为null，也就是说我们走到了旅途的终点，那么我们所寻找的元素就不存在于这个链表之中，于是我们返回false。<br>并不难吧？</p>
+<h3 id="Remove"><a href="#Remove" class="headerlink" title="Remove"></a>Remove</h3><p>这个操作可以从链表里删除一个节点。跟removeFirst相比，它们的不同之处在于removefirst只能删掉第一个元素，而这个remove我们希望可以删除任意的E，只要E在链表中。那么，机智如你，想必一定已经有了思路了吧？是的，只要对search方法稍加修改就可以了。在search方法中，我们沿着链表一路向北直到目的地或者尽头，然后返回是否找到，在Remove中，我们要做同样的事情。只需要额外的一步，当找到包含了元素E的节点之后，我们只需要让E所在的节点的前一个节点的next指向E元素之后的节点就可以了。依旧看图说话。</p>
+<p></p><p align="center"><br>  <img src="LinkedList_Remove.jpg"><br>  <b>LinkedList search Remove chart 4.</b><br></p><br>由于删除一个节点，我们需要知道这个节点的上一个节点在哪里，所以相比于search方法，remove方法我们需要两个指针，一个指向目前所在的current，一个指向之前一个节点previous。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public boolean remove(E e) &#123;</div><div class="line">    if (root == null) &#123;</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    if (root.treasure.equals(e)) &#123;</div><div class="line">        root = root.next;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Node current = root.next;</div><div class="line">    Node previous = root;</div><div class="line"></div><div class="line">    while (current != null) &#123;</div><div class="line">        if (current.treasure.equals(e))&#123;</div><div class="line">        previous.next = current.next;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">        previous = current;</div><div class="line">        current = current.next;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>我们看到，虽然逻辑很相似，但是这个代码的复杂程度要比search稍微高一点。不过不要紧，我们来一行一行的查看一下它的逻辑。首先依旧是null check，如果root是null的话，说明链表是空的，直接返回false表明无法删除目标元素E就可以了。 接下来是查看root节点。作为第一个节点，如果它所收藏的宝藏是我们的目标元素， 那么我们只需要让root指向他自身的next，也就是等于取出第一个元素。到这里为止，之前的逻辑跟removeFirst是一样的。再往下，我们声明了两个指针，previous指向了root，current指向了root.next。因为之前我们已经查看了root不为null，所以root.next是不会抛出NullPointerException的。经过了这些步骤，我们终于做好了准备，可以踏上旅途了。进入while循环之后，我们查看current是否是我们所寻找的元素， 如果是，那么我们的旅途可以成功结束，如果不是，则还要继续寻找。当我们从一个节点走入另一个节点时，我们不仅要更新我们当前所在的节点current，同时还要更新previous，让它指向我们刚刚离开的节点。这样的话，如果下一个节点的元素是目标元素，则我们可以使用previous来找到当前节点，并使得previous.next指向current也就是目标元素节点的next。<br>如果while loop结束了依旧没有，那么说明我们所在的链表不包含目标元素，返回false说明删除失败。</p>
+<h3 id="Edit"><a href="#Edit" class="headerlink" title="Edit"></a>Edit</h3><p>到目前为止，我们实现了插入元素，删除第一个元素，删除目标元素和查找元素这四个方法。利用这四个方法，我们可以实现另一个修改某个目标元素的方法。 逻辑很简单，如果删除目标元素成功，那么插入新元素就可以了。如果删除失败，说明目标元素不存在，自然无法修改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public boolean edit(E target, E updateTo) &#123;</div><div class="line">    if (remove(target))&#123;</div><div class="line">        add(updateTo);</div><div class="line">        return true;</div><div class="line">    &#125; else return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由于逻辑很好理解，我们直接看代码吧。 如果remove 目标元素E返回了true， 那么我们用add方法插入新的元素， 而如果remove 返回了false，则说明这个元素不存在，修改失败。</p>
+<h2 id="Analysis-amp-Finding"><a href="#Analysis-amp-Finding" class="headerlink" title="Analysis &amp; Finding"></a>Analysis &amp; Finding</h2><p>在本文的上一个部分，我们实现了一个链表，以及实现了链表的增删改查等基本方法。下面我们写一点代码来使用这个链表，试着插入删除修改链表的元素。<br>为了方便查看链表内的已有元素，我们来实现一个toString方法。关于这个方法我们在这里稍微解释一下，这跟Java的特性有关系。Java是面向对象的语言，对于Java来说，所有的类都是一个一个的Object，而这些类之间则是继承关系，所以当你在链表内实现了toString方法，实际上你是用你实现的toString覆盖了这个链表父类中默认的toString方法。我们会用下一篇博文来专门介绍Java的这些特性，这里只需要知道这个toString方法是Object类中固有的方法就可以了。<br>这个toString方法我们将会从root开始遍历，依次打印出全部的元素。我们来看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public String toString() &#123;</div><div class="line">    Node current = root;</div><div class="line">    StringBuilder listToString = new StringBuilder();</div><div class="line">    listToString.append(&quot;====&quot; + &apos;\n&apos;);</div><div class="line">    while (current != null) &#123;</div><div class="line">        listToString.append(current.treasure);</div><div class="line">        listToString.append(&quot; &quot;);</div><div class="line">        current = current.next;</div><div class="line">    &#125;</div><div class="line">    listToString.append(&apos;\n&apos; + &quot;====&quot;);</div><div class="line">    return listToString.toString();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>很好理解，跟search的逻辑是一样的。从root开始，对于每一个节点都把元素变成String，再将String拼在一起返回。<br>下面我们来试着插入从0到9十个数字，然后随便查找删除添加一些数字试试看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) &#123;</div><div class="line">    intTest();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static void intTest()&#123;</div><div class="line">    LinkedList&lt;Integer&gt; l = new LinkedList&lt;&gt;();</div><div class="line">    IntStream.range(0, 10).forEach(i -&gt; l.add(i)); // 添加0到9</div><div class="line">    System.out.println(l); // 打印</div><div class="line">    System.out.println(&quot;5 in the list is &quot; + l.search(5)); // 搜索5</div><div class="line">    System.out.println(&quot;10 in the list is &quot; + l.search(10)); // 搜索10</div><div class="line">    System.out.println(&quot;remove first, it is &quot;+ l.removeFirst());</div><div class="line">    System.out.println(&quot;remove first, it is &quot;+ l.removeFirst());</div><div class="line">    System.out.println(&quot;remove first, it is &quot;+ l.removeFirst());</div><div class="line">    System.out.println(l);// 打印</div><div class="line">    System.out.println(&quot;remove 11 is &quot; + l.remove(11));</div><div class="line">    System.out.println(&quot;remove 6 is &quot; + l.remove(6));</div><div class="line">    System.out.println(&quot;remove 0 is &quot; + l.remove(0));</div><div class="line">    System.out.println(l);// 打印</div><div class="line">    IntStream.range(0, 10).forEach(i -&gt; l.add(i)); //添加0到9</div><div class="line">    System.out.println(l);// 打印</div><div class="line">    System.out.println(&quot;Modify number 4 to 99 is &quot; + l.edit(4, 99));</div><div class="line">    System.out.println(&quot;Modify number 40 to 98 is &quot; + l.edit(40, 98));</div><div class="line">    System.out.println(l);// 打印</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这段程序的输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">====</div><div class="line">9 8 7 6 5 4 3 2 1 0 </div><div class="line">====</div><div class="line">5 in the list is true</div><div class="line">10 in the list is false</div><div class="line">remove first, it is 9</div><div class="line">remove first, it is 8</div><div class="line">remove first, it is 7</div><div class="line">====</div><div class="line">6 5 4 3 2 1 0 </div><div class="line">====</div><div class="line">remove 11 is false</div><div class="line">remove 6 is true</div><div class="line">remove 0 is true</div><div class="line">====</div><div class="line">5 4 3 2 1  //注意这里和下一行数字输出</div><div class="line">====</div><div class="line">====</div><div class="line">9 8 7 6 5 4 3 2 1 0 5 4 3 2 1 </div><div class="line">====</div><div class="line">Modify number 4 to 99 is true</div><div class="line">Modify number 40 to 98 is false</div><div class="line">====</div><div class="line">99 9 8 7 6 5 3 2 1 0 5 4 3 2 1 </div><div class="line">====</div></pre></td></tr></table></figure></p>
+<p>输出很直白，这里不再赘述。需要注意的一点是，链表中剩下1到5的情况下，再次插入0到9使得链表中出现了重复的元素，所以当我们将4修改成99的时候，列表中出现的第一个4被删除了，然后在首位置插入了99，所以列表中还有另外一个4。很多时候，我们不希望列表中出现重复的元素，我们可以对插入的方法进行一些修改来达成这一点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public void add(E e) &#123;</div><div class="line">    if (!search(e)) &#123;</div><div class="line">        if (root == null) &#123;</div><div class="line">            root = new Node(e, null);</div><div class="line">        &#125; else &#123;</div><div class="line">            root = new Node(e, root);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>修改很直白，只有search返回false也就是当前链表中没有该元素，我们才会插入。再次运行同样的测试，输出如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">====</div><div class="line">9 8 7 6 5 4 3 2 1 0 </div><div class="line">====</div><div class="line">5 in the list is true</div><div class="line">10 in the list is false</div><div class="line">remove first, it is 9</div><div class="line">remove first, it is 8</div><div class="line">remove first, it is 7</div><div class="line">====</div><div class="line">6 5 4 3 2 1 0 </div><div class="line">====</div><div class="line">remove 11 is false</div><div class="line">remove 6 is true</div><div class="line">remove 0 is true</div><div class="line">====</div><div class="line">5 4 3 2 1 </div><div class="line">====</div><div class="line">====</div><div class="line">9 8 7 6 0 5 4 3 2 1 </div><div class="line">====</div><div class="line">Modify number 4 to 99 is true</div><div class="line">Modify number 40 to 98 is false</div><div class="line">====</div><div class="line">99 9 8 7 6 0 5 3 2 1 </div><div class="line">====</div></pre></td></tr></table></figure></p>
+<p>可以看到，当链表中还有1到5的时候，只有0,6到9可以被插入该链表。当4被修改为99时，链表中的4就没有。另外如果你对于为什么<code>System.out.println(l)</code>可以打印出链表感兴趣，就请关注我的下一篇博文吧 :-)</p>
+<p>##Conclusion<br>在这一篇文章中，我们从头实现了一个链表所包括的常见方法，并对这些方法进行了简单的测试。在前文中，我们提到过链表这一数据结构对于搜索的支持并不好，在以后的文章中我将会用其他结构和链表进行对比，来加深读者对于这些结构的理解。<br><br>下面是这篇文章实现的代码，需要的读者可以尝试运行。<br><br>
+<button onclick="window.open('LinkedList.java')">点我下载 LinkedList.java</button>
+<br><br>谢谢阅读。<br></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/data-structure/tags/data-structure/" rel="tag"># data structure</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/data-structure/2017/02/15/hello-world/" rel="prev" title="第0天的Hello World!">
+                第0天的Hello World! <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/data-structure/avatar.jpg"
+               alt="弦子" />
+          <p class="site-author-name" itemprop="name">弦子</p>
+          <p class="site-description motion-element" itemprop="description">I pledge my life and honor to the Programming, for this night and all the nights to come.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/data-structure/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/data-structure/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LinkedList"><span class="nav-number">1.</span> <span class="nav-text">LinkedList</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methodology"><span class="nav-number">1.3.</span> <span class="nav-text">Methodology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation"><span class="nav-number">1.4.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Insert"><span class="nav-number">1.4.1.</span> <span class="nav-text">Insert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RemoveFirst"><span class="nav-number">1.4.2.</span> <span class="nav-text">RemoveFirst</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search"><span class="nav-number">1.4.3.</span> <span class="nav-text">Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remove"><span class="nav-number">1.4.4.</span> <span class="nav-text">Remove</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Edit"><span class="nav-number">1.4.5.</span> <span class="nav-text">Edit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis-amp-Finding"><span class="nav-number">1.5.</span> <span class="nav-text">Analysis & Finding</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">弦子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/data-structure/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/data-structure/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/data-structure/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
