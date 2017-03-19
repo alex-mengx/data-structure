@@ -1,0 +1,694 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/data-structure/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/data-structure/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/data-structure/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="data structure," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/data-structure/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Stack and Queue堆栈与队列
+1.Abstract今天我们来聊一聊stack和queue。这两个数据结构在很多场合都有很有趣的应用。
+2. Stack堆栈是一个很有趣的结构。还记得我们之前实现的链表LinkedList吗？堆栈stack就可以用链表来实现。我们先来看看堆栈是什么。堆栈是一个先进后出的结构，这个结构中的元素的出入顺序是无法改变的。想象一下手枪的弹夹，假设现在你有一个空的弹">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第3天的Stack和Queue">
+<meta property="og:url" content="https://alex-mengx.github.io/2017/03/11/postStackAndQueue/index.html">
+<meta property="og:site_name" content="Alex's data structure class">
+<meta property="og:description" content="Stack and Queue堆栈与队列
+1.Abstract今天我们来聊一聊stack和queue。这两个数据结构在很多场合都有很有趣的应用。
+2. Stack堆栈是一个很有趣的结构。还记得我们之前实现的链表LinkedList吗？堆栈stack就可以用链表来实现。我们先来看看堆栈是什么。堆栈是一个先进后出的结构，这个结构中的元素的出入顺序是无法改变的。想象一下手枪的弹夹，假设现在你有一个空的弹">
+<meta property="og:updated_time" content="2017-03-19T00:33:26.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第3天的Stack和Queue">
+<meta name="twitter:description" content="Stack and Queue堆栈与队列
+1.Abstract今天我们来聊一聊stack和queue。这两个数据结构在很多场合都有很有趣的应用。
+2. Stack堆栈是一个很有趣的结构。还记得我们之前实现的链表LinkedList吗？堆栈stack就可以用链表来实现。我们先来看看堆栈是什么。堆栈是一个先进后出的结构，这个结构中的元素的出入顺序是无法改变的。想象一下手枪的弹夹，假设现在你有一个空的弹">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/data-structure/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alex-mengx.github.io/2017/03/11/postStackAndQueue/"/>
+
+
+
+
+
+  <title> 第3天的Stack和Queue | Alex's data structure class </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/data-structure/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Alex's data structure class</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/data-structure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/data-structure/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/data-structure/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alex-mengx.github.io/data-structure/2017/03/11/postStackAndQueue/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="弦子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/data-structure/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Alex's data structure class">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Alex's data structure class" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第3天的Stack和Queue
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-11T01:13:50-05:00">
+                2017-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Stack-and-Queue"><a href="#Stack-and-Queue" class="headerlink" title="Stack and Queue"></a>Stack and Queue</h1><p>堆栈与队列</p>
+<h1 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1.Abstract"></a>1.Abstract</h1><p>今天我们来聊一聊stack和queue。这两个数据结构在很多场合都有很有趣的应用。</p>
+<h1 id="2-Stack"><a href="#2-Stack" class="headerlink" title="2. Stack"></a>2. Stack</h1><p>堆栈是一个很有趣的结构。还记得我们之前实现的链表LinkedList吗？堆栈stack就可以用链表来实现。我们先来看看堆栈是什么。堆栈是一个先进后出的结构，这个结构中的元素的出入顺序是无法改变的。想象一下手枪的弹夹，假设现在你有一个空的弹夹，在使用之前，你需要一颗子弹一颗子弹的将子弹压入弹夹。那么在上膛之后射击的过程中，你会发现，最先被激发的子弹是最后被压入弹夹的那一颗，而最后被激发的子弹则是第一个被压入的。同时，你并不需要将子弹压满弹夹，只要弹夹里有子弹， 你就可以上膛射击。同样，你也不需要将弹夹打空才能重新压入，只要弹夹有空间，你随时都可以取出弹夹压入新的子弹。这跟堆栈的操作方式是十分类似的。</p>
+<h2 id="2-1-Stack-Operations"><a href="#2-1-Stack-Operations" class="headerlink" title="2.1 Stack Operations"></a>2.1 Stack Operations</h2><p>堆栈有两个最基本的操作，就是压入push和取出pop，也就是子弹压入push进弹夹，和射击时子弹被弹出pop。我们在链表中实现的操作有插入删除查找和修改，实际上用链表就可以很轻易的实现一个堆栈的结构。我们在这里将使用我们之前创建的LinkedList来实现堆栈。</p>
+<h2 id="2-2-Stack-Implementation"><a href="#2-2-Stack-Implementation" class="headerlink" title="2.2 Stack Implementation"></a>2.2 Stack Implementation</h2><p>首先来实现一个堆栈的框架。来看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class Stack&lt;E&gt; &#123;</div><div class="line">    LinkedList&lt;E&gt; stack;</div><div class="line">    int currentAmount;</div><div class="line"></div><div class="line">    public Stack () &#123;</div><div class="line">        this.stack = new LinkedList&lt;&gt;();</div><div class="line">        this.currentAmount = 0;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>非常简单，我们需要一个LinkedList来作为存储数据的结构，需要一个currentAmount变量来追踪目前堆栈内的元素的数量。其实如果我们的LinkedList可以实现一个size方法来返回链表中的节点的数量，这样在堆栈中我们就不需要这个currentAmount了，但是因为我们的链表的设计并不完善，我们只好用额外的类变量来记录元素数量。这说明一开始的目标和设计很重要，另外使用现成的轮子也很重要（笑。我们知道，Java中是有List接口(interface)的，实际上正确的做法是使得我们的LinkedList链表implements List接口，这样我们就可以实现全部List所需要的方法了。不过既然链表已经完成了，我们就用这个不完善的链表来实现这个堆栈吧。</p>
+<h3 id="2-2-1-Push-and-Pop"><a href="#2-2-1-Push-and-Pop" class="headerlink" title="2.2.1 Push and Pop"></a>2.2.1 Push and Pop</h3><p>入栈，就是将一个元素推入堆栈的方法。这个元素将会成为堆栈最顶端的元素，如果这次入栈之后的下一个操作是出栈pop的话，那么这个元素就会被取出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">| 2 | 4 | 1 | 6       &lt;-  push 8</div><div class="line">底端          顶端</div><div class="line">| 2 | 4 | 1 | 6 | 8</div></pre></td></tr></table></figure></p>
+<p>原本的堆栈的顶端是6，我们将8推入之后，顶端变成了8。很好理解，就像包装好的桶装羽毛球，装入第二个，第一个就会被压入底部。出栈也是很类似的，当堆栈不为空时，pop就会退出堆栈的顶部元素，并且返回该元素，就如同你从羽毛球筒中拿出了顶部的羽毛球，现在原本排在第二的羽毛球就成为了顶部。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">| 2 | 4 | 1 | 6 | 8   -&gt;  pop </div><div class="line">底端          顶端</div><div class="line">| 2 | 4 | 1 | 6               return 8</div></pre></td></tr></table></figure></p>
+<p>实现也很简单，我们来看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public void push(E e) &#123;</div><div class="line">    this.stack.add(e);</div><div class="line">    this.currentAmount++;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public E pop() &#123;</div><div class="line">    if (this.currentAmount &gt; 0)&#123;</div><div class="line">        this.currentAmount--;</div><div class="line">        return this.stack.removeFirst();</div><div class="line">    &#125; else return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>相比于二叉树，这两个操作的逻辑实在是太简单了。push很好理解，直接将元素e从头部放入链表中，链表本身就会保持元素插入的顺序。pop也很好理解，如果堆栈中元素数量大于零，那么就从链表的头取出一个元素，并且堆栈元素数量减一。</p>
+<h3 id="2-2-2-Peek-and-Size"><a href="#2-2-2-Peek-and-Size" class="headerlink" title="2.2.2 Peek and Size"></a>2.2.2 Peek and Size</h3><p>另外堆栈还有两个很有用的方法，一个是查看顶端元素peek，一个是元素数量size。这两个方法可以用来查看但是不移除堆栈的元素，和查看当前堆栈内的元素的数量。当然也可以添加一些辅助性的方法比如是否为空isEmpty，当内部元素数量为0时返回true，反之则返回false。我们来看看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public E peek() &#123;</div><div class="line">    if (isEmpty())</div><div class="line">        return null;</div><div class="line">    </div><div class="line">    E e = pop();</div><div class="line">    push(e);;</div><div class="line">    return e;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public int size() &#123;</div><div class="line">    return currentAmount;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public boolean isEmpty() &#123;</div><div class="line">    return currentAmount == 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样,一个简单的堆栈就实现完成了。那么这个堆栈能用来做什么呢？我们一会再说，先看看这篇文章的另一个重点，队列。</p>
+<h1 id="3-Queue"><a href="#3-Queue" class="headerlink" title="3. Queue"></a>3. Queue</h1><p>队列是一个很有用的结构。在很多复杂的应用中都可以看到它的身影。这个结构跟堆栈有一些类似的地方，也可以用一个链表来实现。跟堆栈不同的是，这个结构的元素的出入顺序是先进先出的。同样，队列中元素的出入顺序是无法改变的，先进入队列的元素一定会先出队列。这个队列我们会从头开始实现，以便加深理解，同时也可以和堆栈的实现方式作对比。</p>
+<h2 id="3-1-Queue-Operations"><a href="#3-1-Queue-Operations" class="headerlink" title="3.1 Queue Operations"></a>3.1 Queue Operations</h2><p>队列有两个基本操作，进入队列push和从队列中取出poll。顾名思义，push就是将某元素推入队列，poll就是从队列中取出一个元素。除了这两个基本操作之外，跟堆栈一样，isEmpty和size也是很有用的方法。另外peek方法也很有帮助，同样可以查看但是不移除下一个将被拿出队列的元素。因为这一次我们要从头来实现一个队列，所以我们将不借助任何现有的结构。我们先来看看这两个主要的方法，然后再来设计我们该如何实现我们的队列。</p>
+<h3 id="3-1-1-Push-and-Poll"><a href="#3-1-1-Push-and-Poll" class="headerlink" title="3.1.1 Push and Poll"></a>3.1.1 Push and Poll</h3><p>这里我们就不多话了，看图吧。push方法：从顶端推入新的元素。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">8 push  -&gt;   2 | 4 | 1 | 6 </div><div class="line">           顶端       底端</div><div class="line">         8 | 2 | 4 | 1 | 6</div></pre></td></tr></table></figure></p>
+<p>poll方法：从底端拿出队列中最先进入的元素。注意，所有的元素都是从顶端推入的，且进入队列后顺序不可更改，所以底端的元素一定是目前队列全部元素中最先进入的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">8 | 2 | 4 | 1 | 6 </div><div class="line">  顶端       底端</div><div class="line">8 | 2 | 4 | 1     -&gt;  poll 6</div></pre></td></tr></table></figure></p>
+<h2 id="3-2-Queue-Design"><a href="#3-2-Queue-Design" class="headerlink" title="3.2 Queue Design"></a>3.2 Queue Design</h2><p>我们看到，队列首先是一个链状的结构。那么我们应该可以使用类似链表的结构来实现。但是我们仔细观察后发现，队列的操作是在两个方向的。换句话说，在堆栈中，我们可以通过操作链表的头来进行push和poll，因为元素只会从一个方向进入或被拿出，但是对于队列，我们需要知道一条链表的头和尾，因为我们将会从一端插入，另一端取出。链表的特性并不能满足这一要求，因为链表只有指向下一个节点的指针，就像在寻宝的过程中，你只能找到下一个藏宝点，而上一个藏宝点的位置已经不可知了。这样的话，如果我们的结构和链表完全一样，则如果每次插入都是在链表头部root节点，那么当我们取出(poll)的时候，我们就需要遍历整条链表。怎么解决这个问题呢？我们有两个选择。<br>1. 我们可以使用array。数组对于某个index位置的读取是O(1)操作，跟数组的元素数量没关系，这会使得队列的入队和出队都是O(1)操作。<br>2. 我们也可以使用双向链表。双向链表跟链表的区别就是，双向链表每个节点保有两个指针，分别指向前一个和后一个节点。这样我们也能实现O(1)操作，不会影响性能。</p>
+<h2 id="3-3-Queue-Implementation"><a href="#3-3-Queue-Implementation" class="headerlink" title="3.3 Queue Implementation"></a>3.3 Queue Implementation</h2><p>在这个实现中，我们将使用简化版的双向链表。先来看看大体框架。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">class Queue&lt;E&gt; &#123;</div><div class="line">    Node top;</div><div class="line">    Node bottom;</div><div class="line">    </div><div class="line">    class Node &#123;</div><div class="line">        E e;</div><div class="line">        Node previous;</div><div class="line">        Node next;</div><div class="line">        </div><div class="line">        public Node(E e, Node previous, Node next) &#123;</div><div class="line">            this.e = e;</div><div class="line">            this.previous = previous;</div><div class="line">            this.next = next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Queue() &#123;</div><div class="line">            this.top = null;</div><div class="line">            this.bottom = null;</div><div class="line">            this.size = 0;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们可以看到，很类似链表的结构，只不过我们单个节点有了指向前节点的指针。另外不同于链表只有一个root节点，我们的队列有了top和bottom两个节点，分别指向我们的顶端和底端。我们来继续实现需要的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public void push(E e) &#123;</div><div class="line">    this.top = new Node(e, null, top);</div><div class="line">    if (size++ == 0) &#123;</div><div class="line">        this.bottom = top;</div><div class="line">    &#125; else &#123;</div><div class="line">        this.top.next.previous = top;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public E poll() &#123;</div><div class="line">    if (size == 0)</div><div class="line">        return null;</div><div class="line">    E e = bottom.e;</div><div class="line">    this.bottom = bottom.previous;</div><div class="line">    if (this.bottom != null)</div><div class="line">        this.bottom.next = null;</div><div class="line">    size--;</div><div class="line">    return e;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public E peek() &#123;</div><div class="line">    if (size == 0)</div><div class="line">        return null;</div><div class="line">    return bottom.e;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public int size() &#123;</div><div class="line">    return size;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public boolean isEmpty() &#123;</div><div class="line">    return size == 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>push的操作比较好理解，我们用图来表示这个双向链表来帮助理解。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">初始为空的队列：</div><div class="line">    top -&gt; null </div><div class="line">    null &lt;- bottom</div><div class="line"></div><div class="line">插入新节点1：</div><div class="line">    top  -&gt;  new Node 1: previous, next -&gt; null</div><div class="line">    null &lt;-                             &lt;- bottom</div><div class="line">    因为之前队列是空的，所以再插入第一个节点之后，top和bottom就都是这个节点了。</div><div class="line"></div><div class="line">插入新节点2：</div><div class="line">    top  -&gt;  new Node 2: previous, next -&gt; node 1 -&gt; null</div><div class="line">    null &lt;-                             &lt;-        &lt;- bottom</div><div class="line">    我们可以看到，插入都是在top进行的。</div></pre></td></tr></table></figure></p>
+<p>从图上我们可以看到，插入的新节点都在top。插入的逻辑我们来看代码和图。只要是执行插入一个新节点的操作，我们就使得top等于这个新的节点，然后使这个新节点的next指向旧的top。这样，我们就在队列的顶端放入了一个新的节点。但是还没完，如果我们发现队列是空的，这是第一个节点，那么说明这个点也是底端节点，所以我们使得bottom也等于这个新节点。如果队列不为空，这说明新节点的next指向的旧的top是有节点的，所以我们要使得新节点的next的previous等于新节点。看起来有点绕，但是逻辑是很清楚的。新节点知道自己的next是旧的top。但是旧的top并不知道自己的previous变成了新节点。所以旧的top的previous依旧是null，需要我们来使得它指向新节点。poll的逻辑也是类似的。如果为空，返回null，否则返回底部的元素，并且使bottom指向bottom的前一个元素。这里注意的是，如果bottom不为null，则我们希望设置bottom的next指针为null。如果没有这一步，队列一样可以正常工作，但是在内存中，我们实际上将会保留全部插入过得元素，只有bottom指针的位置在随着poll出元素而改变。这样运行时间长了内存会被占用的越来越多。所以将不在使用的对象赋值成为null，保证没有指针指向可以被销毁的对象，是保证内存低占用的关键之一。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">队列： 4，1，7，9，4，3，6</div><div class="line">    top -&gt; 4 -&gt; 1 -&gt; 7 -&gt; 9 -&gt; 4 -&gt; 3 -&gt; 6 -&gt; null</div><div class="line">    null &lt;-  &lt;-   &lt;-   &lt;-   &lt;-   &lt;-   &lt;-   &lt;- bottom</div><div class="line"></div><div class="line">poll: 有设置next = null</div><div class="line">    top -&gt; 4 -&gt; 1 -&gt; 7 -&gt; 9 -&gt; 4 -&gt; 3 -&gt; null       poll 6</div><div class="line">    null &lt;-  &lt;-   &lt;-   &lt;-   &lt;-   &lt;-   &lt;- bottom</div><div class="line"></div><div class="line">poll：没有设置next = null</div><div class="line">    top -&gt; 4 -&gt; 1 -&gt; 7 -&gt; 9 -&gt; 4 -&gt; 3 -&gt; 6 -&gt; null</div><div class="line">    null &lt;-  &lt;-   &lt;-   &lt;-   &lt;-   &lt;-   &lt;- bottom</div></pre></td></tr></table></figure></p>
+<p>区别很明显，没有this.bottom.next = null的话，从top到bottom的链表会越来越长，没有元素会被删除，只有bottom指针在随着poll不断地向左移动。想象一下我们这个队列是一个系统的消息队列，那么内存占用就会随着消息的传递而越来越大，就算队列表现为空，实际内存占用依然会居高不下，直到出现OutOfMemoryError或者虚拟机停机为止。所以在日常的工作或者学习中，注意内存的合理使用和销毁不必要的对象是很有必要的。</p>
+<h2 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h2><p>今天我们实现了队列和堆栈这两种新的数据结构，这两种结构在一些算法的实现中非常常见。明天我们将会介绍一些有趣的问题，并且使用队列和堆栈来解决。</p>
+<p><br>惯例，下面是这篇文章实现的队列和堆栈，需要的读者可以尝试运行。<br><br>
+<button onclick="window.open('QueueStack.java')">点我下载 QueueStack.java</button>
+<br><br>谢谢阅读。<br></p>
+<p>　/) /)<br>ฅ(• - •)ฅ</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/data-structure/tags/data-structure/" rel="tag"># data structure</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/data-structure/2017/03/01/postBinaryTree/" rel="next" title="第2天的BinaryTree">
+                <i class="fa fa-chevron-left"></i> 第2天的BinaryTree
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/data-structure/avatar.jpg"
+               alt="弦子" />
+          <p class="site-author-name" itemprop="name">弦子</p>
+          <p class="site-description motion-element" itemprop="description">I pledge my life and honor to the Programming, for this night and all the nights to come.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/data-structure/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/data-structure/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Stack-and-Queue"><span class="nav-number">1.</span> <span class="nav-text">Stack and Queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Abstract"><span class="nav-number">2.</span> <span class="nav-text">1.Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Stack"><span class="nav-number">3.</span> <span class="nav-text">2. Stack</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Stack-Operations"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 Stack Operations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Stack-Implementation"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 Stack Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-Push-and-Pop"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.2.1 Push and Pop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-Peek-and-Size"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2.2 Peek and Size</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Queue"><span class="nav-number">4.</span> <span class="nav-text">3. Queue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Queue-Operations"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 Queue Operations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-Push-and-Poll"><span class="nav-number">4.1.1.</span> <span class="nav-text">3.1.1 Push and Poll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-Queue-Design"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 Queue Design</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-Queue-Implementation"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 Queue Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Conclusion"><span class="nav-number">4.4.</span> <span class="nav-text">4. Conclusion</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">弦子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/data-structure/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/data-structure/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/data-structure/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
