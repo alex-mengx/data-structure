@@ -1,5 +1,3 @@
-package test;
-
 import java.util.stream.IntStream;
 
 public class LinkedList<E> {

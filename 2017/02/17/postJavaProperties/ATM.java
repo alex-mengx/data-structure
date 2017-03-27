@@ -1,5 +1,3 @@
-package test;
-
 public class ATM {
 	private String password = "p@ssw0rd";
 	private int balance = 0;
