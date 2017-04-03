@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://alex-mengx.github.io/data-structure/2017/03/31/postBFSandQueueStack/</loc>
+    
+    <lastmod>2017-04-03T02:05:05.215Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://alex-mengx.github.io/data-structure/2017/03/20/postDepthFirst/</loc>
     
     <lastmod>2017-03-31T21:52:19.137Z</lastmod>

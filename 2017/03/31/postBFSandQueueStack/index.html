@@ -1,0 +1,699 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/data-structure/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/data-structure/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/data-structure/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/data-structure/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Binary Tree traversalAbstraction昨天我们讲了二叉树的深度优先遍历的三种顺序和各自的实现方式。用递归的方式实现的遍历十分的简便。今天我们来尝试两种新的遍历方式。
+Introduction今天我们将实现两种遍历方式，一种是深度优先的中序遍历，一种是广度优先的遍历。之前我们已经复习了堆栈和队列的概念，没有看过的小伙伴可以阅读来帮助理解。堆栈和队列。这次的中序遍历将摒弃递归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第3天的BinaryTree遍历之广度优先">
+<meta property="og:url" content="https://alex-mengx.github.io/2017/03/31/postBFSandQueueStack/index.html">
+<meta property="og:site_name" content="Alex's data structure class">
+<meta property="og:description" content="Binary Tree traversalAbstraction昨天我们讲了二叉树的深度优先遍历的三种顺序和各自的实现方式。用递归的方式实现的遍历十分的简便。今天我们来尝试两种新的遍历方式。
+Introduction今天我们将实现两种遍历方式，一种是深度优先的中序遍历，一种是广度优先的遍历。之前我们已经复习了堆栈和队列的概念，没有看过的小伙伴可以阅读来帮助理解。堆栈和队列。这次的中序遍历将摒弃递归">
+<meta property="og:updated_time" content="2017-04-03T02:05:05.215Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第3天的BinaryTree遍历之广度优先">
+<meta name="twitter:description" content="Binary Tree traversalAbstraction昨天我们讲了二叉树的深度优先遍历的三种顺序和各自的实现方式。用递归的方式实现的遍历十分的简便。今天我们来尝试两种新的遍历方式。
+Introduction今天我们将实现两种遍历方式，一种是深度优先的中序遍历，一种是广度优先的遍历。之前我们已经复习了堆栈和队列的概念，没有看过的小伙伴可以阅读来帮助理解。堆栈和队列。这次的中序遍历将摒弃递归">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/data-structure/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alex-mengx.github.io/2017/03/31/postBFSandQueueStack/"/>
+
+
+
+
+
+  <title> 第3天的BinaryTree遍历之广度优先 | Alex's data structure class </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/data-structure/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Alex's data structure class</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/data-structure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/data-structure/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/data-structure/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alex-mengx.github.io/data-structure/2017/03/31/postBFSandQueueStack/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="弦子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/data-structure/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Alex's data structure class">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Alex's data structure class" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第3天的BinaryTree遍历之广度优先
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-31T18:14:24-04:00">
+                2017-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Binary-Tree-traversal"><a href="#Binary-Tree-traversal" class="headerlink" title="Binary Tree traversal"></a>Binary Tree traversal</h1><h2 id="Abstraction"><a href="#Abstraction" class="headerlink" title="Abstraction"></a>Abstraction</h2><p>昨天我们讲了二叉树的深度优先遍历的三种顺序和各自的实现方式。用递归的方式实现的遍历十分的简便。今天我们来尝试两种新的遍历方式。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>今天我们将实现两种遍历方式，一种是深度优先的中序遍历，一种是广度优先的遍历。之前我们已经复习了堆栈和队列的概念，没有看过的小伙伴可以阅读来帮助理解。<a href="https://alex-mengx.github.io/data-structure/2017/03/11/postStackAndQueue/">堆栈和队列</a>。这次的中序遍历将摒弃递归的思想，使用额外的结构和循环来实现。</p>
+<h2 id="Depth-first-traversal-with-stack"><a href="#Depth-first-traversal-with-stack" class="headerlink" title="Depth first traversal with stack"></a>Depth first traversal with stack</h2><p>我们来回忆一下中序遍历的逻辑。</p>
+<ol>
+<li>遍历左边子树。</li>
+<li>访问当前根节点。</li>
+<li>遍历右边子树。</li>
+</ol>
+<p>如果是递归，那么这里很好实现，只要反复递归调用这个方法遍历两侧子树就可以。因为二叉树的性质决定了对于当前树使用的方法对于子树也一定适用。但是如果摒除递归的思想，那么我们需要一个新的思路。我们先来画一个二叉树吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">// 依旧是很眼熟的一棵树。</div></pre></td></tr></table></figure></p>
+<p>在没有递归的情况下，我们需要想办法来记录即将访问的节点。我们先来看看中序遍历的顺序。这个树的中序遍历的访问应该从2开始，然后依次是4，6，9 和12。所以我们的遍历应该可以从2开始，也就是树中的最小节点。2访问结束后，我们发现2没有子树，所以我们需要一个结构来记录每一个父节点，这样在访问完左子树之后，我们可以返回父节点继续遍历。我们先来假设我们有一个集合，可以记录任意的节点，来试着手动遍历这个二叉树。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line">                4  &lt;-  start</div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">// 4 是整个树的根节点，所以我们的遍历的起始点一定是4。那么我们就将4放入到集合之中。</div><div class="line">4 -&gt; &#123;4&#125;</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">  这里 -&gt;  2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">// 4是有左侧子树的，所以按照中序的顺序，我们需要先遍历左侧。所以我们将2也放入集合。</div><div class="line">2 -&gt; &#123;2， 4&#125;</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">           ^      /    \  </div><div class="line">           |    6       12</div><div class="line">    左边是null</div><div class="line">// 来到了null，所以前一个节点就是当前子树的最小节点，可以访问了。</div><div class="line">2 &lt;- &#123;4&#125;</div><div class="line">从集合里取出2并访问。同时，试图将2的右子树放入集合</div><div class="line">输出：2</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">           ^      /    \  </div><div class="line">           |    6       12</div><div class="line">    右边是null</div><div class="line">// 2的右边也是null，则2的左右都访问结束，是时候继续返回上层了。</div><div class="line">4 &lt;- &#123;&#125;</div><div class="line">从集合里取出4并访问。同时试图将4的右子树放入集合</div><div class="line">输出：2， 4</div><div class="line">9 -&gt; &#123;9&#125;</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9 &lt;-  这里</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">// 9 的左侧不为null，将左侧放入集合，以保证先访问左侧小节点。</div><div class="line">6 -&gt; &#123;6, 9&#125;</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9 </div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">                ^</div><div class="line">            左边是null</div><div class="line">// 与节点2的情况是一样的，左侧为null，所以我们输出6，并且尝试将右侧节点放入集合。</div><div class="line">6 &lt;- &#123;9&#125;</div><div class="line">输出：2， 4， 6</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9 </div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">                ^</div><div class="line">            右边是null</div><div class="line">// 右侧也是null，继续从集合里取出上层父节点</div><div class="line">9 &lt;- &#123;&#125;</div><div class="line">输出：2， 4， 6， 9</div><div class="line">取出了9并且访问。同时试图把右侧子树放入集合。</div><div class="line">12 -&gt; &#123;12&#125;</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9 </div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">                        ^</div><div class="line">                    左边是null</div><div class="line">// 左边为null，于是当前节点一定是当前子树的最小值。取出12节点并访问。</div><div class="line">12 &lt;- &#123;&#125;</div><div class="line">输出：2， 4， 6， 9， 12</div><div class="line">// 试图将右侧放入集合。右侧为空，试图从集合中取出上层，集合为空，停止遍历。</div></pre></td></tr></table></figure></p>
+<p>这个过程中，我们发现当有这个集合，且从集合中取出节点的顺序正确的时候，我们可以通过循环来遍历这个树。通过画图我们验证了非递归遍历的可行性。现在存在的问题有两个：</p>
+<ol>
+<li>如何保证集合放入节点和取出节点的顺序是我们所需要的？</li>
+<li>如何设计条件检查和边界条件来实现循环？</li>
+</ol>
+<p>我们分别来解决这两个问题。</p>
+<h3 id="集合顺序"><a href="#集合顺序" class="headerlink" title="集合顺序"></a>集合顺序</h3><p>我们先把集合所有放入和取出的步骤都拿出来摆在一起看看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">4 -&gt; &#123;4&#125;</div><div class="line">2 -&gt; &#123;2， 4&#125;</div><div class="line">2 &lt;- &#123;4&#125;</div><div class="line">4 &lt;- &#123;&#125;</div><div class="line">9 -&gt; &#123;9&#125;</div><div class="line">6 -&gt; &#123;6, 9&#125;</div><div class="line">6 &lt;- &#123;9&#125;</div><div class="line">9 &lt;- &#123;&#125;</div><div class="line">12 -&gt; &#123;12&#125;</div><div class="line">12 &lt;- &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>通过观察，我们发现了一个很有趣的现象：既节点插入的顺序永远是先入后出的。我们来重新走一遍这个放入取出的步骤。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">--------------------------</div><div class="line">| 底部                   4    4进入 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                 4 2    2进入 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                   4    2取出 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                        4取出 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                   9    9进入 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                 9 6    6进入 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                   9    6取出 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                   9    9取出 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                  12    12进入 </div><div class="line">--------------------------</div><div class="line"></div><div class="line">--------------------------</div><div class="line">| 底部                  12    12取出 </div><div class="line">--------------------------</div></pre></td></tr></table></figure></p>
+<p>是不是很眼熟？有没有恍然大悟？是的，正是堆栈的入栈和出栈的顺序！这样的话第二个问题也就好解决了，只需要判断子树是不是null就可以按照顺序插入或者取出节点。我们来详细看看。</p>
+<h3 id="循环的几个条件"><a href="#循环的几个条件" class="headerlink" title="循环的几个条件"></a>循环的几个条件</h3><p>在手动遍历的过程中，我们发现我们需要记录父节点。为了保证中序遍历的顺序，我们又需要从最左边的节点开始遍历。那么我们可以设计这样的逻辑：首先我们假设整个树的根节点已经被放入了堆栈，并且有一个当前节点变量指向根节点。</p>
+<ol>
+<li>从当前节点开始我们依次将每一个左侧节点放入堆栈，并使当前节点等于其左侧节点，直到当前节点为null。</li>
+<li>从堆栈中取出顶端节点，这个节点应该是当前节点的父节点。使得当前节点等于其右节点，这里有两个分支。<ol>
+<li>if 右节点不为null，当前节点等于右节点，将右节点放入堆栈并继续步骤1。</li>
+<li>else 从堆栈中取出顶端元素，使当前元素等于该元素，并继续步骤2。</li>
+</ol>
+</li>
+</ol>
+<p>这样我们的逻辑就有了。停止条件也很简单，当前节点为null且堆栈中没有节点可以取出，就可以结束遍历了。我们来看代码实现。</p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>上面的逻辑在实现的时候可以通过一些优化和技巧合并一部分，我们来看具体实现，代码中我们会进一步解释。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public static void inOrderWithStack(Node root) &#123;</div><div class="line">    Stack stack = new Stack();</div><div class="line">    Node current = root;</div><div class="line">    stack.push(root); // 堆栈放入根节点，准备进入循环</div><div class="line"></div><div class="line">    while (!stack.isEmpty()) &#123; // 当堆栈为空我们就可以停止了</div><div class="line">        while (current != null) &#123;</div><div class="line">            stack.push(current);</div><div class="line">            current = current.left;  // 这里就是上面逻辑的第一步，一路向左直到null</div><div class="line">        &#125;</div><div class="line">        current = stack.pop(); // 从堆栈中取出顶端节点，这个节点应该是当前节点的父节点。使得当前节点等于其右节点。</div><div class="line">        if (current == null) // 这里为null，则说明我们已经走到了树的最右，可以停止了。</div><div class="line">            break;</div><div class="line">        System.out.print(current.treasure + &quot; &quot;);</div><div class="line">        current = current.right; </div><div class="line">        // 这里其实有两个分支。虽然这里只是使得当前节点等于右子树，但是当进入下一个循环，if current为null，我们进入步骤2.1， else我们进入2.2</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样，中序遍历就通过堆栈实现了。</p>
+<h2 id="breadth-first-traversal"><a href="#breadth-first-traversal" class="headerlink" title="breadth first traversal"></a>breadth first traversal</h2><p>我们再来看看广度优先。对于二叉树来说，广度优先遍历的顺序很清晰，就是逐行访问。用图来表示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">// 没错还是这个树。</div><div class="line">我们想要的遍历顺序就是：</div><div class="line">4, 2, 9, 6, 12</div></pre></td></tr></table></figure></p>
+<p>这个遍历的顺序是从根节点开始的。主要的思想在于，当我们遍历当前行节点的时候，我们需要一个结构来存储下一行要遍历的节点。因为只有在遍历当前节点的时候，我们才可以获得当前节点的子节点。我们用图来表示一下遍历的过程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">                4  &lt;- 起始点</div><div class="line">             /    \  </div><div class="line">           2        9</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">// 按照先左后右将4的子树放入集合</div><div class="line">9, 2 -&gt; &#123;9, 2&#125;</div><div class="line">输出： 4</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9  &lt;- 当前行</div><div class="line">                  /    \  </div><div class="line">                6       12</div><div class="line">// 从集合中依次取出2， 9 并且访问。在取出每一个节点的过程中，将该节点的子节点放入集合。</div><div class="line">12, 6 -&gt; &#123;12, 6&#125; -&gt; 9, 2</div><div class="line">输出： 4， 2， 9</div><div class="line"></div><div class="line">                4  </div><div class="line">             /    \  </div><div class="line">           2        9  </div><div class="line">                  /    \  </div><div class="line">                6       12  &lt;- 当前行</div><div class="line">// 从集合中依次取出6， 12 并且访问。在取出每一个节点的过程中，将该节点的子节点放入集合。</div><div class="line">&#123;&#125; -&gt; 12， 6</div><div class="line">输出： 4， 2， 9， 6， 12</div><div class="line"></div><div class="line">// 集合为空，遍历结束。</div></pre></td></tr></table></figure></p>
+<p>有了之前堆栈的经验，我们很容易就能发现，这个集合放入和取出的规律也很熟悉。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">4 -&gt; &#123;4&#125;</div><div class="line">2 -&gt; &#123;2&#125; -&gt; 4</div><div class="line">9 -&gt; &#123;9, 2&#125; -&gt; 2</div><div class="line">6 -&gt; &#123;6&#125; -&gt; 9</div><div class="line">12 -&gt; &#123;12&#125; -&gt; 6</div><div class="line">     &#123;&#125; -&gt; 12</div></pre></td></tr></table></figure></p>
+<p>这个集合精确地执行着先进先出的顺序，那么队列在这里就非常的合适。我们来看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public static &lt;T extends Comparable&lt;T&gt;&gt; void breadthFirst(BinaryTree&lt;T&gt;.Node tree)  &#123;</div><div class="line">    if (tree == null)</div><div class="line">        return;</div><div class="line">    QueueStack.Queue&lt;BinaryTree&lt;T&gt;.Node&gt; queue = new QueueStack().new Queue&lt;&gt;();</div><div class="line">    queue.push(tree);</div><div class="line">    while (!queue.isEmpty())&#123;  // 只要队列不为空我们就继续遍历</div><div class="line">        BinaryTree&lt;T&gt;.Node current = queue.pop(); //从队列中取出当前节点</div><div class="line">        System.out.print(current.treasure + &quot; &quot;); // 访问当前节点</div><div class="line">        Optional.ofNullable(current.left).ifPresent(n -&gt; queue.push(n)); //如果这个节点的子树不为null，则将子树放入队列</div><div class="line">        Optional.ofNullable(current.right).ifPresent(n -&gt; queue.push(n));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>队列的性质决定了在之前的节点没有被全部拿出之前，我们当前放入的节点是绝不会被拿出来的。所以我们将根节点从队列中取出之后，我们按顺序将根节点的左右节点放入了队列。那么在我们取出左节点之前，右节点一定不会被取出。依次递推，我们取出左节点，并将左节点的两个子节点放入队列，那么在我们从队列中取出右节点之前，这两个节点一定不会被取出。这就保证了，每一行最先从队列中被取出的节点一定是当前行最左侧的节点。假设这个最左侧的节点是A，那么A的子节点的放入一定晚于A节点同一行的其他节点，但是一定早于A节点的子节点所在行的其他节点。这也就决定了，在当前行没有遍历完毕之前，我们是不会进入下一行的。这就保证了广度优先遍历的顺序。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>今天我们在堆栈和队列的帮助下实现了深度优先的中序遍历和广度优先的逐行遍历。照旧，源代码会贴在下面，感兴趣的朋友可以下载并运行。另外，我们的广度优先遍历只是输出了广度优先遍历的结果。如果我们想单独输出树的每一行，该怎么做？今天的源码中其实包含了这个问题的解答，但是有余力的小伙伴可以试着自己重新思考并且尝试实现。</p>
+<p><br>二叉树遍历之二。<br><br>
+<button onclick="window.open('BinaryTreeTraversal.java')">点我下载 BinaryTreeTraversal.java</button>
+<br><br>谢谢阅读。<br></p>
+<p>　/) /)<br>ฅ(• - •)ฅ</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/data-structure/2017/03/20/postDepthFirst/" rel="next" title="第2天的BinaryTree遍历之深度优先">
+                <i class="fa fa-chevron-left"></i> 第2天的BinaryTree遍历之深度优先
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/data-structure/avatar.jpg"
+               alt="弦子" />
+          <p class="site-author-name" itemprop="name">弦子</p>
+          <p class="site-description motion-element" itemprop="description">I pledge my life and honor to the Programming, for this night and all the nights to come.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/data-structure/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/data-structure/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Binary-Tree-traversal"><span class="nav-number">1.</span> <span class="nav-text">Binary Tree traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstraction"><span class="nav-number">1.1.</span> <span class="nav-text">Abstraction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Depth-first-traversal-with-stack"><span class="nav-number">1.3.</span> <span class="nav-text">Depth first traversal with stack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#集合顺序"><span class="nav-number">1.3.1.</span> <span class="nav-text">集合顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环的几个条件"><span class="nav-number">1.3.2.</span> <span class="nav-text">循环的几个条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation"><span class="nav-number">1.4.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#breadth-first-traversal"><span class="nav-number">1.5.</span> <span class="nav-text">breadth first traversal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.6.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">弦子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/data-structure/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/data-structure/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/data-structure/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
