@@ -1,0 +1,696 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/data-structure/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/data-structure/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/data-structure/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Algorithm," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/data-structure/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="AlgorithmAnalysisAbstract今天我们来聊一聊算法的分析。这一篇算是一篇入门的科普读物，所以我们会尽量减少数学公式，更多地使用描述性的语言来便于大家理解。
+Introduction算法分析，就是分析算法的方法。算法是什么大家应该都有所了解。我们通常意义上所说的算法，就是一系列完备的指令，通过这个序列的指令来将输入转化为输出。而算法分析，就是一种分析方法，来判断这个序列的指令所消">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第四天的算法分析">
+<meta property="og:url" content="https://alex-mengx.github.io/2017/04/02/postAlgorithmAnalysisPrologue/index.html">
+<meta property="og:site_name" content="Alex's data structure class">
+<meta property="og:description" content="AlgorithmAnalysisAbstract今天我们来聊一聊算法的分析。这一篇算是一篇入门的科普读物，所以我们会尽量减少数学公式，更多地使用描述性的语言来便于大家理解。
+Introduction算法分析，就是分析算法的方法。算法是什么大家应该都有所了解。我们通常意义上所说的算法，就是一系列完备的指令，通过这个序列的指令来将输入转化为输出。而算法分析，就是一种分析方法，来判断这个序列的指令所消">
+<meta property="og:updated_time" content="2017-04-10T04:14:51.445Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第四天的算法分析">
+<meta name="twitter:description" content="AlgorithmAnalysisAbstract今天我们来聊一聊算法的分析。这一篇算是一篇入门的科普读物，所以我们会尽量减少数学公式，更多地使用描述性的语言来便于大家理解。
+Introduction算法分析，就是分析算法的方法。算法是什么大家应该都有所了解。我们通常意义上所说的算法，就是一系列完备的指令，通过这个序列的指令来将输入转化为输出。而算法分析，就是一种分析方法，来判断这个序列的指令所消">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/data-structure/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alex-mengx.github.io/2017/04/02/postAlgorithmAnalysisPrologue/"/>
+
+
+
+
+
+  <title> 第四天的算法分析 | Alex's data structure class </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/data-structure/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Alex's data structure class</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/data-structure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/data-structure/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/data-structure/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alex-mengx.github.io/data-structure/2017/04/02/postAlgorithmAnalysisPrologue/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="弦子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/data-structure/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Alex's data structure class">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Alex's data structure class" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第四天的算法分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-02T22:58:14-04:00">
+                2017-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="AlgorithmAnalysis"><a href="#AlgorithmAnalysis" class="headerlink" title="AlgorithmAnalysis"></a>AlgorithmAnalysis</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>今天我们来聊一聊算法的分析。这一篇算是一篇入门的科普读物，所以我们会尽量减少数学公式，更多地使用描述性的语言来便于大家理解。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>算法分析，就是分析算法的方法。算法是什么大家应该都有所了解。我们通常意义上所说的算法，就是一系列完备的指令，通过这个序列的指令来将输入转化为输出。而算法分析，就是一种分析方法，来判断这个序列的指令所消耗的资源的数量。这里的资源一般指时间和空间，即一个算法所消耗的时间和内存，也就是我们常说的时间复杂度和空间复杂度。</p>
+<h3 id="Brute-force"><a href="#Brute-force" class="headerlink" title="Brute-force"></a>Brute-force</h3><p>俗称暴力法。一般来说，对于一个复杂问题，都会有一种自然的简单解决方式，这个方式通常会占用大量的资源，有很高的复杂度。我们来看看例子。如果我们有一个包含了n个数字的数组，我们该如何排序呢？如果不考虑任何的技巧，那么最自然的想法是什么？就像从框里面挑苹果一样，每次都找最小的拿出来就可以了。我们新建一个尺寸为n的数组，然后在原始数组中找最小值，把这个最小值复制到新数组，并且从旧数组中删除。重复这个步骤n次，我们的新数组就会是一个已经排好序的数组了。这个方法简单易懂，从来没有接触过算法的人也能想到。这样的来自生活的方法很大程度上就是暴力的，费时的。再比如，我们需要找寻两个地点的最短路径。直觉的想法是什么？把全部的路径都找出来，然后对比找到最短的。但是在实践中，这是难以接受的，因为对于稍微大量的数据，这些方法的时间消耗会难接受。</p>
+<h3 id="Polynomial-time"><a href="#Polynomial-time" class="headerlink" title="Polynomial time"></a>Polynomial time</h3><p>多项式时间。这个概念目前不是很好解释，因为我们对于P和NP以及其他的Complexity class均没有涉及，所以这里稍微介绍一下，不用深究。这个概念是为了和Exponential time分开。多项式时间是实践中可以被接受的时间复杂度，而指数时间是基本上不可以被接受的。抛开公式定义，我们来用简单但是不是十分准确的语言来描述一下。 多项式时间的复杂度，一般是指算法的消耗的时间和样本数量N的关系是多项式关系，即N^k。而指数时间是指消耗时间和N是指数关系，即2^N。</p>
+<h2 id="What-is-Big-O"><a href="#What-is-Big-O" class="headerlink" title="What is Big-O"></a>What is Big-O</h2><p>大O表示法是常见的表示算法耗时的方法。其实它就是一个函数，用来表述某个算法的耗时与数量Ｎ的关系。但是要注意，这里的Ｏ()并不是准确的时间函数，而是算法的时间函数的上界。我们先看一下简化的的定义，然后再来仔细描述。<br><code>对于时间函数T(x)，如果有函数f(x)使得x趋近于无穷时有f(x)*常数c &gt; T(x) 则O(f(x))s是时间函数T(x)的上界。</code><br>也就是说，对于某个算法，如果耗时和n的关系在n接近无穷大的时候小于某个函数f(n)和特定常数的乘积，则O(f(n))就是这个算法的时间复杂度。首先先看一个简单的例子。对于一个大小为N的数组，我们要找到这个数组的最小值。这个问题很好解决，对于数组的一次遍历就可以了。对于两个数字的比较所占用的时间是O(1)，那么比较n次的时间消耗就是O(n)。不管n如何增加，消耗的时间一定是与n同比增长，对于任意n趋近于无穷，都有T(n) &lt; n*c，所以O(n)就是这个方法的时间复杂度。我们记得之前在讲递归的时候，我们用斐波那契数列算法举过例子，我们今天就来分析一下这个算法的时间复杂度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// F(n) =   1                   n = 1</div><div class="line">//          0                   n = 0</div><div class="line">//          F(n-1) + F(n-2)     n &gt; 1</div><div class="line"></div><div class="line">int fibonacci(int n) &#123;</div><div class="line">    if (n == 1)</div><div class="line">        return 1;</div><div class="line">    if (n == 0)</div><div class="line">        return 0;</div><div class="line">    return fibonacci(n-1) + fibonacci(n-2);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个就是斐波那契的计算方式。我们来拆分一下它的运行过程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">                                              f(n)</div><div class="line">                          ____________________/ \_____________________</div><div class="line">                         |                                           |</div><div class="line">                      f(n-1)                                      f(n-2)</div><div class="line">                 _______/ \_______                          ________/ \_______</div><div class="line">                |                 |                        |                  |</div><div class="line">              f(n-2)            f(n-3)                   f(n-3)              f(n-4)</div><div class="line">           ____/ \_____       ____/ \_____          ______/ \_____      ______/ \_______</div><div class="line">          |            |     |            |        |             |      |               |</div><div class="line">        f(n-3)      f(n-4)  f(n-4)      f(n-5)    f(n-4)      f(n-5)   f(n-5)          f(n-6)</div><div class="line">                                                。</div><div class="line">                                                。</div><div class="line">                                                。</div><div class="line">f(0)  f(1)  f(0)  f(1)  f(0)  f(1)  f(0)  f(1) ............  f(0)  f(1)  f(0)  f(1)  f(0)  f(1)  f(0)  f(1)</div></pre></td></tr></table></figure></p>
+<p>我们观察一下这个运行树。这个树有以下几个特点：</p>
+<ol>
+<li>第k层的节点数量是2^k。对于f(n)则从第一层开始节点数量依次为 1,2,4,8,16….2^n。</li>
+<li>左边依次为n-1, n-2, n-3 … 直到1。</li>
+<li>右侧依次为n-2, n-4, n-6 … 直到1或者0</li>
+<li>对于最底层，所有的节点都会是f(0)或者f(1)</li>
+</ol>
+<p>那么很显然，f(0)和f(1)的耗时是常数O(1)。对于f(n)，我们实际的时间消耗是等于树全部叶子节点的O(1)相加再加上n次常数相加的耗时，显然，这个耗时的上限不会超过O(2^n)也就是第n层的节点数量乘以O(1)。<br>通过计算我们可以得到同样的结论。我们用T(n)来表示计算第n个数消耗的时间。对于n等于0和1的情况，算法消耗常数时间，我们将其记为O(1)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">T(0) = O(1)</div><div class="line">T(1) = O(1)</div><div class="line">T(2) = T(1) + T(0) + O(1)</div><div class="line">T(3) = T(2) + T(1) + O(1)</div><div class="line"></div><div class="line">计算f(n)的耗时T(n)实际上包含了三部分：</div><div class="line">1. 计算f(n-1)的时间T(n-1)</div><div class="line">2. 计算f(n-2)的时间T(n-2)</div><div class="line">3. 将f(n-1)和f(n-2)相加的时间O(1)</div><div class="line"></div><div class="line">可推出：</div><div class="line">T(n) = T(n-1) + T(n-2) + O(1)</div></pre></td></tr></table></figure></p>
+<p>不需要解出这个公式，我们可以看出对于n这个式子将会有2^n个O(1)操作，既O(2^n)。这就是一个很慢的算法，因为它是exponential的，是程指数函数增长的。<br>我们再来看另一个fibonacci。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">int fibonacci(int n) &#123;</div><div class="line">    int fibonacci[] = new int[n+1];</div><div class="line">    fibonacci[0] = 0;</div><div class="line">    fibonacci[1] = 1;</div><div class="line">    for (int i = 2; i &lt;= n; i++) &#123;</div><div class="line">        fibonacci[i] = fibonacci[i-1] + fibonacci[i-2];</div><div class="line">    &#125;</div><div class="line">    return fibonacci[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>为了方便，这些实现没有做n的输入检查，这是不好的。不过我们来看时间复杂度吧。这个复杂度很好分析，它只有一个从2到n的for loop，而每个循环的操作的耗时都是常数c，既O(1)。所以这个方法的耗时就是O(n)。但是这个方法的空间消耗要大一些，当n很大的时候，需要建立一个很大的数组,这个算法的空间复杂度也是O(n)。但是，在循环中，我们并不需要数组的全部，我们只需要这个数组的最后三个元素，之前的都可以扔掉。我们来改进一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">int fibonacci(int n) &#123;</div><div class="line">    int pfibonacci = 0;</div><div class="line">    int cfibonacci = 1;</div><div class="line">    int nfibonacci = 1;</div><div class="line">    for (int i = 2; i &lt;= n; i++) &#123;</div><div class="line">        nfibonacci = cfibonacci + pfibonacci;</div><div class="line">        pfibonacci = cfibonacci;</div><div class="line">        cfibonacci = nfibonacci;</div><div class="line">    &#125;</div><div class="line">    return nfibonacci;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这下，这个算法的空间复杂度变成了O(1),因为不管输入的N有多大，消耗的空间都是一个特定的常数。</p>
+<h2 id="Why-Big-O"><a href="#Why-Big-O" class="headerlink" title="Why Big O"></a>Why Big O</h2><p>我们为什么需要分析算法呢？来看一个问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">100*N^100  vs  2^0.001N</div></pre></td></tr></table></figure></p>
+<p>假设现在有一个问题，我们有两个解决方法。第一个方法的时间复杂度是O(100N^100)，100乘以N的一百次方，第二个方法是O(2^0.001N)，2的0.001N次方，我们该如何选择呢？<br>在回答之前，我们先来做一个简单的计算。假设现在我们有一个CPU，这个CPU每秒钟可以进行10^9次浮点运算（实际上家用CPU没有这么快，这需要几十GHz的时钟频率）我们来对比一下不同的时间复杂算法对于特定N的耗时吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">我们不去计算具体的数字，我们只列出数量级和单位。</div><div class="line">如果小于1秒钟，我们记做L1(less than 1 second)</div><div class="line">如果时间超过了宇宙年龄，我们就定义一个新的时间单位叫做EOU(end of universe)</div><div class="line"></div><div class="line">N的大小        O(n)        O(nLogn)        O(n^2)        O(n^3)        O(2^n)        O(n!)</div><div class="line">10^1            L1           L1             L1            L1            L1            L1</div><div class="line">10^2            L1           L1             L1            L1            10^22年       10^150年</div><div class="line">10^3            L1           L1             L1            1秒           EOU           EOU</div><div class="line">10^4            L1           L1             L1            10^1分        EOU           EOU</div><div class="line">10^5            L1           L1             10^1秒        10^1天        EOU           EOU</div><div class="line">10^6            L1           L1             10^1分        10^1年        EOU           EOU</div><div class="line">10^7            L1           10^1秒         10^1时        10^2世纪      EOU           EOU</div><div class="line">10^8            L1           10^1秒         10^2天        10^1万年      EOU           EOU</div><div class="line">10^9            1秒          10^1分         10^1年        10^1亿年      EOU           EOU</div></pre></td></tr></table></figure></p>
+<p>我们看到了，一个好的算法的能力是多么的强大。当我们使用冒泡排序的时候，几千几万个数字的耗时会很小，跟快排没有直观上的区别，但是当数量级增长到了百万的时候，这个差距就变成了秒和小时。同样，我们说一个算法是Polynomial的是常数项时间的，这是可以接受的，但是对于一个指数时间的算法，通常我们是敬谢不敏的。</p>
+<h2 id="常见时间复杂度举例"><a href="#常见时间复杂度举例" class="headerlink" title="常见时间复杂度举例"></a>常见时间复杂度举例</h2><p>最后我们来看几个例子吧。</p>
+<h3 id="O-Logn"><a href="#O-Logn" class="headerlink" title="O(Logn)"></a>O(Logn)</h3><p>二叉树的插入和查找，这是典型的二分查找。对于数量N的数组，二分查找最多需要logn次比较。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">只给出算法，具体实现自己去尝试吧</div><div class="line">对于有序数组A，取范围0-A.length，以[left -right]标示。从数组中查找目标值x</div><div class="line"></div><div class="line">步骤1. 比较[left - right]范围的中间的值和目标值x。如果x小于中间值，则新的范围为left-中间。反之，则新的范围为[中间-right]</div><div class="line">步骤2. 重复步骤一直到找到x或者left大于right</div></pre></td></tr></table></figure></p>
+<h3 id="O-n"><a href="#O-n" class="headerlink" title="O(n)"></a>O(n)</h3><p>一个数组中找最大值，两个有序数列的合并等等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">int maxAt(int[] array) &#123;</div><div class="line">    int max = 0;</div><div class="line">    for (int i = 0; i &lt; array.length; i++) &#123;</div><div class="line">        max = max &gt; array[i] ? max : array[i];</div><div class="line">    &#125;</div><div class="line">    return max;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通常只需要遍历一次全部数据，耗时增长和n增长同比的算法，就是O(n)</p>
+<h3 id="O-nLogn"><a href="#O-nLogn" class="headerlink" title="O(nLogn)"></a>O(nLogn)</h3><p>归并排序。我们后面会拿出一章专门讲排序。</p>
+<h3 id="O-n-2"><a href="#O-n-2" class="headerlink" title="O(n^2)"></a>O(n^2)</h3><p>冒泡排序。 这需要用每个元素跟全部N个元素做一次对比，所以耗时是N*N</p>
+<h3 id="O-n-3"><a href="#O-n-3" class="headerlink" title="O(n^3)"></a>O(n^3)</h3><p>我们有N个数组int[]。请找到所有不相交的数组。不相交的意思是这两个数组包含的数字完全不同。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">for 每一个数组 S</div><div class="line">    for 所有除了S以外的其他数组 V</div><div class="line">        for V中的每一个元素 e</div><div class="line">            判断e 是否属于 S</div><div class="line">        如果所有V中的e都不属于S，则我们找到了V和S这一对</div></pre></td></tr></table></figure></p>
+<p>这个算法就是O(n^3)。首先对于判断数组S是否包含元素e，这需要对S进行遍历，这是一个O(n)操作。这个O(n)的操作要被重复O(n)次，因为我们对于V中的全部元素都要进行这个操作。这就给了我们O(n^2)的时间复杂度。而对于全部N个数组S，我们都要进行一样的操作，于是这就给了我们O(n^3)的复杂度。</p>
+<h3 id="O-2-n"><a href="#O-2-n" class="headerlink" title="O(2^n)"></a>O(2^n)</h3><p>暴力破解密码。假设密码全部是数字，且只有6位。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public void testPassword() &#123;</div><div class="line">    IntStream.range(0, 9).forEach(i -&gt; &#123;</div><div class="line">        IntStream.range(0, 9).forEach(j -&gt; &#123;</div><div class="line">            IntStream.range(0, 9).forEach(k -&gt; &#123;</div><div class="line">                IntStream.range(0, 9).forEach(l -&gt; &#123;</div><div class="line">                    IntStream.range(0, 9).forEach(m -&gt; &#123;</div><div class="line">                        IntStream.range(0, 9).forEach(n -&gt; &#123;</div><div class="line">                            if ((&quot;&quot;+i+j+k+l+m+n).equals(password))</div><div class="line">                                System.out.println(&quot;FIND IT!&quot;);</div><div class="line">                        &#125;);</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对于n位密码，每一位我们都要测试0-9十个数字。很明显，两位密码耗时10^2，三位密码耗时10^3，这个算法的耗时是O(10^n)。所以对于密码只包含数字字母和符号的rar压缩包，我们暴力破解的耗时取决于密码长度。常见字符有128个，所以破解密码复杂度为O(128^n)。那么一个四位的密码，耗时大约2秒钟。六位的密码耗时就是大约12小时。八位的密码，耗时要22年。而八位数字密码则只需要一秒钟。所以复杂密码很重要，很重要，很重要。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>今天我们讲述了big O 标记的使用方法和基本含义，也介绍了一些常见的时间复杂度和对应的例子。这算是一个好的开始，以后如果有需要，我们会继续写关于算法分析的部分，而实际的分析步骤就需要我们努力去理解一些证明和数学归纳了。下面我们就用归纳法来证明一下斐波那契数的递归算法的复杂度吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">基线 n = 0 明显可知耗时为O(1)</div><div class="line">     n = 1 同样明显可知耗时为O(1)</div><div class="line"></div><div class="line">假设 T(n-1) = O( 2^(n-1) ) </div><div class="line"></div><div class="line">由 F(n) = F(n-1) + F(n-2) 可推出 T(n) = T(n-1) + T(n-2) + O(1)</div><div class="line">=&gt; T(n) = O( 2^(n-1) ) + O( 2^(n-2) ) + O(1) </div><div class="line"></div><div class="line">因为 2^(n-1) + 2^(n-2) &lt; 2^(n-1) + 2^(n-1) = 2 * 2^(n-1) = 2^n</div><div class="line">=&gt; T(n) = O(2^n)</div><div class="line"></div><div class="line">由推论可知 2^n就是这个算法的时间函数的上限，对任意大的n都有2^n / T(n) = 常数c 且c &lt; infinite</div></pre></td></tr></table></figure></p>
+<p>　/) /)<br>ฅ(• - •)ฅ</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/data-structure/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/data-structure/2017/03/31/postBFSandQueueStack/" rel="next" title="第3天的BinaryTree遍历之广度优先">
+                <i class="fa fa-chevron-left"></i> 第3天的BinaryTree遍历之广度优先
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/data-structure/avatar.jpg"
+               alt="弦子" />
+          <p class="site-author-name" itemprop="name">弦子</p>
+          <p class="site-description motion-element" itemprop="description">I pledge my life and honor to the Programming, for this night and all the nights to come.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/data-structure/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/data-structure/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AlgorithmAnalysis"><span class="nav-number">1.</span> <span class="nav-text">AlgorithmAnalysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Brute-force"><span class="nav-number">1.2.1.</span> <span class="nav-text">Brute-force</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polynomial-time"><span class="nav-number">1.2.2.</span> <span class="nav-text">Polynomial time</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Big-O"><span class="nav-number">1.3.</span> <span class="nav-text">What is Big-O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Big-O"><span class="nav-number">1.4.</span> <span class="nav-text">Why Big O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见时间复杂度举例"><span class="nav-number">1.5.</span> <span class="nav-text">常见时间复杂度举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#O-Logn"><span class="nav-number">1.5.1.</span> <span class="nav-text">O(Logn)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-n"><span class="nav-number">1.5.2.</span> <span class="nav-text">O(n)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-nLogn"><span class="nav-number">1.5.3.</span> <span class="nav-text">O(nLogn)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-n-2"><span class="nav-number">1.5.4.</span> <span class="nav-text">O(n^2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-n-3"><span class="nav-number">1.5.5.</span> <span class="nav-text">O(n^3)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-2-n"><span class="nav-number">1.5.6.</span> <span class="nav-text">O(2^n)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.6.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">弦子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/data-structure/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/data-structure/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/data-structure/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

@@ -2,9 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://alex-mengx.github.io/data-structure/2017/04/02/postAlgorithmAnalysisPrologue/</loc>
+    
+    <lastmod>2017-04-10T04:14:51.445Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://alex-mengx.github.io/data-structure/2017/03/11/postStackAndQueue/</loc>
+    
+    <lastmod>2017-04-08T02:27:08.830Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://alex-mengx.github.io/data-structure/2017/02/24/postRecursive/</loc>
+    
+    <lastmod>2017-04-08T02:19:13.615Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://alex-mengx.github.io/data-structure/2017/03/31/postBFSandQueueStack/</loc>
     
-    <lastmod>2017-04-03T02:05:05.215Z</lastmod>
+    <lastmod>2017-04-08T02:19:12.932Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://alex-mengx.github.io/data-structure/2017/03/01/postBinaryTree/</loc>
+    
+    <lastmod>2017-04-08T02:19:12.230Z</lastmod>
     
   </url>
   
@@ -16,30 +44,9 @@
   </url>
   
   <url>
-    <loc>https://alex-mengx.github.io/data-structure/2017/03/11/postStackAndQueue/</loc>
-    
-    <lastmod>2017-03-19T00:33:26.310Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://alex-mengx.github.io/data-structure/2017/03/01/postBinaryTree/</loc>
-    
-    <lastmod>2017-03-11T06:10:40.766Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://alex-mengx.github.io/404.html</loc>
     
     <lastmod>2017-03-08T01:17:09.203Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://alex-mengx.github.io/data-structure/2017/02/24/postRecursive/</loc>
-    
-    <lastmod>2017-03-02T03:42:59.823Z</lastmod>
     
   </url>
   
