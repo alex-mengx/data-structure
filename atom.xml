@@ -5,7 +5,7 @@
   <link href="/data-structure/atom.xml" rel="self"/>
   
   <link href="https://alex-mengx.github.io/"/>
-  <updated>2017-04-10T04:14:51.445Z</updated>
+  <updated>2017-04-10T04:15:46.901Z</updated>
   <id>https://alex-mengx.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>第四天的算法分析</title>
+    <title>第4天的算法分析</title>
     <link href="https://alex-mengx.github.io/2017/04/02/postAlgorithmAnalysisPrologue/"/>
     <id>https://alex-mengx.github.io/2017/04/02/postAlgorithmAnalysisPrologue/</id>
     <published>2017-04-03T02:58:14.000Z</published>
-    <updated>2017-04-10T04:14:51.445Z</updated>
+    <updated>2017-04-10T04:15:46.901Z</updated>
     
     <content type="html"><![CDATA[<h1 id="AlgorithmAnalysis"><a href="#AlgorithmAnalysis" class="headerlink" title="AlgorithmAnalysis"></a>AlgorithmAnalysis</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>今天我们来聊一聊算法的分析。这一篇算是一篇入门的科普读物，所以我们会尽量减少数学公式，更多地使用描述性的语言来便于大家理解。</p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>算法分析，就是分析算法的方法。算法是什么大家应该都有所了解。我们通常意义上所说的算法，就是一系列完备的指令，通过这个序列的指令来将输入转化为输出。而算法分析，就是一种分析方法，来判断这个序列的指令所消耗的资源的数量。这里的资源一般指时间和空间，即一个算法所消耗的时间和内存，也就是我们常说的时间复杂度和空间复杂度。</p>
