@@ -128,12 +128,18 @@ public class HashMap<K, V> {
 		capacity = capacity * 2;
 
 		LinkedList<Entry>[] array = new LinkedList[capacity];
-		Arrays.asList(this.table).stream().filter(l -> l != null).forEach(l -> l.forEach(e -> {
-			e.hashcode = hashFunction(e.getKey());
-			if (array[e.hashcode] == null)
-				array[e.hashcode] = new LinkedList<Entry>();
-			array[e.hashcode].add(e);
-		}));
+		for (LinkedList<Entry> l : table){
+			if (l != null){
+				for (Entry e : l){
+					e.hashcode = hashFunction(e.key);
+					if (array[e.hashcode] == null) {
+						array[e.hashcode] = new LinkedList<Entry>();
+						tableSize++;
+					}
+					array[e.hashcode].add(e);
+				}
+			}
+		}
 
 		this.table = array;
 	}
