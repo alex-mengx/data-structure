@@ -1,0 +1,700 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/data-structure/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/data-structure/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/data-structure/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="data structure," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/data-structure/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="HeapIntroduction堆是一个很神奇的结构。与其说是数据结构，不如说是一种算法或者想法。这个结构常用来作为排序的方式之一而被使用。堆跟二叉树其实十分的相似。堆一般有两种，我们称为最大堆和最小堆。用递归的方式来定义一下堆：根节点的数字，大于或者小于左右两侧的子堆。跟二叉树的区别在于，堆结构不在意左右两侧子节点之间的大小关系，且堆永远是完全二叉树结构。
+Completed Binary Tr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第5天的Heap">
+<meta property="og:url" content="https://alex-mengx.github.io/2017/05/04/postSorting/index.html">
+<meta property="og:site_name" content="Alex's data structure class">
+<meta property="og:description" content="HeapIntroduction堆是一个很神奇的结构。与其说是数据结构，不如说是一种算法或者想法。这个结构常用来作为排序的方式之一而被使用。堆跟二叉树其实十分的相似。堆一般有两种，我们称为最大堆和最小堆。用递归的方式来定义一下堆：根节点的数字，大于或者小于左右两侧的子堆。跟二叉树的区别在于，堆结构不在意左右两侧子节点之间的大小关系，且堆永远是完全二叉树结构。
+Completed Binary Tr">
+<meta property="og:updated_time" content="2017-05-07T17:00:34.228Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第5天的Heap">
+<meta name="twitter:description" content="HeapIntroduction堆是一个很神奇的结构。与其说是数据结构，不如说是一种算法或者想法。这个结构常用来作为排序的方式之一而被使用。堆跟二叉树其实十分的相似。堆一般有两种，我们称为最大堆和最小堆。用递归的方式来定义一下堆：根节点的数字，大于或者小于左右两侧的子堆。跟二叉树的区别在于，堆结构不在意左右两侧子节点之间的大小关系，且堆永远是完全二叉树结构。
+Completed Binary Tr">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/data-structure/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alex-mengx.github.io/2017/05/04/postSorting/"/>
+
+
+
+
+
+  <title> 第5天的Heap | Alex's data structure class </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/data-structure/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Alex's data structure class</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/data-structure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/data-structure/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/data-structure/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alex-mengx.github.io/data-structure/2017/05/04/postSorting/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="弦子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/data-structure/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Alex's data structure class">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Alex's data structure class" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第5天的Heap
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-04T22:38:37-04:00">
+                2017-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>堆是一个很神奇的结构。与其说是数据结构，不如说是一种算法或者想法。这个结构常用来作为排序的方式之一而被使用。堆跟二叉树其实十分的相似。堆一般有两种，我们称为最大堆和最小堆。用递归的方式来定义一下堆：根节点的数字，大于或者小于左右两侧的子堆。跟二叉树的区别在于，堆结构不在意左右两侧子节点之间的大小关系，且堆永远是完全二叉树结构。</p>
+<h3 id="Completed-Binary-Tree"><a href="#Completed-Binary-Tree" class="headerlink" title="Completed Binary Tree"></a>Completed Binary Tree</h3><p>完全二叉树的概念其实很简单，一个二叉树，如果除了最底层以外的每一层都没有空节点，且最底层的节点都在左侧，则这个二叉树是完全二叉树。图来举例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">完全二叉树1：</div><div class="line">                14  </div><div class="line">             /      \  </div><div class="line">           12        11</div><div class="line">         /  \      /    \  </div><div class="line">        1    0    6      9</div><div class="line"></div><div class="line"></div><div class="line">完全二叉树2：</div><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           12        11</div><div class="line">         /  \     /   </div><div class="line">        1    0   6</div></pre></td></tr></table></figure></p>
+<p>由图可知，只要二叉树除了最底层以外其它层的节点都是满的，且最底层的空节点也只在右侧，则这就是一个完全二叉树。</p>
+<h3 id="Max-Heap"><a href="#Max-Heap" class="headerlink" title="Max Heap"></a>Max Heap</h3><p>我们今天用最大堆来举例实现什么是堆。最大堆最重要的特点就是无论什么时候，堆内的最大元素一定在根部。我们今天要实现的堆将有两个主要的方法：插入和取出。插入的时候是乱序，但是取出的元素一定是当前情况下堆内的最大元素。我们画图来看看堆的特性吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">我们有一个空的堆，我们将插入 &#123;14， 5， 12， 11 ，7， 0&#125; 6个数字到一个最大堆中。</div><div class="line"></div><div class="line">插入14 </div><div class="line">                14</div><div class="line"></div><div class="line">插入5 </div><div class="line">                14  </div><div class="line">             /     </div><div class="line">           5</div><div class="line"></div><div class="line">插入12</div><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           5        12</div><div class="line"></div><div class="line">插入11</div><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           11        12</div><div class="line">         / </div><div class="line">        5</div><div class="line"></div><div class="line">插入7</div><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           11        12</div><div class="line">         /  \  </div><div class="line">        5    7</div><div class="line"></div><div class="line">插入0</div><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           11        12</div><div class="line">         /  \      /</div><div class="line">        5    7    0</div></pre></td></tr></table></figure></p>
+<p>无论任何时候，这个堆和其中的子堆，堆中的最大值一定在根节点。</p>
+<h2 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h2><p>堆的应用有很多种。我们想一想这种特性可以用来做什么呢？<br>堆排序。因为堆顶端的元素一定是当前堆内最大或者最小，我们只要持续从根节点取出元素，那么我们取出的元素就一定是排好序的。原理很简单，我们将需要排序的元素放入最大堆中，根据最大堆的原理，我们取出的顶端根元素一定是全部元素的最大值。取出顶端元素之后，这个最大堆会重新调整结构，使得堆内的元素的最大值移动到顶端。我们持续从堆中取出元素，则取出元素的顺序一定是从大到小的。<br>优先级队列。因为堆在任何时刻的最大元素都在顶端，所以在多次插入取出的时候，如果需要一直取出当前的最大值，则可以使用堆。<br>任务管理。很多任务是有优先级的。比如系统进程，有很多的优先级。那么在队列中，我们希望优先完成优先级高的任务，则我们可以使用堆。因为在插入更高优先级任务到堆中，堆顶会是当前最大优先级的任务。</p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>我们来实现一个最大堆。首先我们先来看一种新的二叉树的表示方法。二叉树我们以前的实现方式是先实现一个节点node，然后靠左右的指针来构建二叉树。但是呢，其实二叉树可以放进一个数组里。我们来看看这种表示方式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">                14  </div><div class="line">             /      \  </div><div class="line">           12        11</div><div class="line">         /  \      /    \  </div><div class="line">        1    0    6      9</div><div class="line"></div><div class="line">我们来把这个二叉树放到数组里。</div><div class="line">[14, 12, 11, 1, 0, 6 ,9]</div><div class="line">这个数组为什么能表达二叉树呢？我们来看看每一个父节点和子节点在数组内的关系。</div><div class="line">便于计算，我们这个数组的角标从1开始而不是0.其实规律很好发现，我们把二叉树逐层遍历，放进数组就可以了。</div><div class="line">那么节点间的关系怎样表示呢？</div><div class="line">1的子节点在2和3的位置，2的子节点在4和5的位置，3的子节点在6和7的位置。</div><div class="line">也就是说，对于二叉树，节点i的左子节点在i*2, 右子节点在i*2+1.</div></pre></td></tr></table></figure></p>
+<p>这样的二叉树表达的优点是读取快操作简单，但是当二叉树内有空节点的时候，就会占用额外的空间。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">                14  </div><div class="line">                    \  </div><div class="line">                     11</div><div class="line">                   /   </div><div class="line">                  6 </div><div class="line"></div><div class="line">[14, , 11, , , 6, ]</div><div class="line">只有三个元素，但是占用了7个元素的空间。</div></pre></td></tr></table></figure></p>
+<p>但是对于我们的最大堆来说，这就不是一个问题了，因为最大堆的特性就是，这个堆是完全二叉树，不会有空子节点，且最后一层节点都在左侧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           11        12</div><div class="line">         /  \      /</div><div class="line">        5    7    0</div><div class="line"></div><div class="line">[14, 11, 12, 5, 7, 0]</div><div class="line">不会占用额外的空间。</div></pre></td></tr></table></figure></p>
+<p>我们来用数组实现这个最大堆吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">@SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">public class MaxHeap&lt;E extends Comparable&lt;E&gt;&gt; &#123;</div><div class="line">    private E[] heap;</div><div class="line">    private int currentIndex;</div><div class="line"></div><div class="line">    public MaxHeap(Class&lt;E&gt; c, final int size) &#123;</div><div class="line">        final E[] a = (E[]) Array.newInstance(c, size);</div><div class="line">        heap = a;</div><div class="line">        currentIndex = 1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">        public boolean isEmpty() &#123;</div><div class="line">        return currentIndex == 1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public boolean isFull() &#123;</div><div class="line">        return currentIndex == heap.length - 1;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Comparable我们已经很眼熟了，在二叉树中我们也限定了插入的元素必须是Comparable类，否则无法比大小。heap数组是我们的堆的数组表现形式，所有的元素都会保存在这个数组内。currentIndex 指向了堆的最下层的第一个空节点，也就等于数组元素的数量-1. 也就是说，当堆内没有元素，这个currentIndex等于1。另外注意为了便于计算，heap数组我们将会从位置1开始而不是0。在构造器内我们玩了个小把戏，因为java不支持generic数组，所以我们为了动态支持generic类型，在构造器内新建数组的时候，我们用反射的方式新建动态类型数组。反射的原理我们以后会开专门的一篇来讲解。</p>
+<h3 id="Push"><a href="#Push" class="headerlink" title="Push"></a>Push</h3><p>首先我们来实现插入的方法。插入的原理其实很简单，因为我们的最大堆实际上是数组，而且我们已经知道这个完全二叉树的第一个空子节点的位置，所以把元素放入堆是个O(1)的操作。之后我们需要比较新元素和每一层的父元素，来确定最大值依旧在堆顶。我们来看图。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">假设我们有最大堆： [14, 12, 11, 1, 0, 6] </div><div class="line"></div><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           12        11</div><div class="line">         /  \     /   </div><div class="line">        1    0   6  </div><div class="line"></div><div class="line">这是个最大堆，因为每一个位置的值都大于这个位置的子堆。假设我们要插入16。</div><div class="line">堆的数组变成: [14, 12, 11, 1, 0, 6, 16] </div><div class="line"></div><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           12        11</div><div class="line">         /  \     /    \</div><div class="line">        1    0   6      16</div><div class="line"></div><div class="line">比较16和它的父节点，如果新元素16较大，我们交换16和父节点的位置。</div><div class="line">因为在插入前，16的父节点是这个子堆的最大值，所以如果新元素16大于父节点，那么16一定大于父节点的左子节点6.</div><div class="line"> 堆的数组变成: [14, 12, 16, 1, 0, 6, 11] </div><div class="line"></div><div class="line">                14  </div><div class="line">             /     \  </div><div class="line">           12        16</div><div class="line">         /  \     /    \</div><div class="line">        1    0   6      11</div><div class="line"></div><div class="line">比较16和新的父节点。14原本是堆的最大值，所以如果16大于14，那么16一定大于原本堆内的其他元素。</div><div class="line">堆的数组变成: [16, 12, 14, 1, 0, 6, 11] </div><div class="line"></div><div class="line">                16  </div><div class="line">             /     \  </div><div class="line">           12        14</div><div class="line">         /  \     /    \</div><div class="line">        1    0   6      11</div><div class="line"></div><div class="line">到此，插入完成。我们再来插入一个新元素13：[16, 12, 14, 1, 0, 6, 11， 13]</div><div class="line"></div><div class="line">                16  </div><div class="line">             /     \  </div><div class="line">           12        14</div><div class="line">         /  \     /    \</div><div class="line">        1    0   6      11</div><div class="line">      /</div><div class="line">     13</div><div class="line"></div><div class="line">比较13和父节点，13较大，交换位置。13的位置是8， 父节点位置是8/2 = 4  </div><div class="line">新数组：[16, 12, 14, 13, 0, 6, 11， 1] 注意数组的位置从1开始计算。</div><div class="line"></div><div class="line">                16  </div><div class="line">             /     \  </div><div class="line">           12        14</div><div class="line">         /  \     /    \</div><div class="line">       13    0   6      11</div><div class="line">      /</div><div class="line">     1</div><div class="line"></div><div class="line">比较13和父节点，交换位置。父节点4/2 = 2, 新数组：[16, 13, 14, 12, 0, 6, 11， 1] </div><div class="line"></div><div class="line">                16  </div><div class="line">             /     \  </div><div class="line">           13        14</div><div class="line">         /  \     /    \</div><div class="line">       12    0   6      11</div><div class="line">      /</div><div class="line">     1</div><div class="line"></div><div class="line">13小于新的父节点，插入结束。</div></pre></td></tr></table></figure></p>
+<p>通过图解我们看到，元素放入数组队尾只需要O(1)时间，等于对变量赋值。而整个插入过程，如果新元素小于其父元素，则插入立刻结束。最坏的情况，新的元素是堆中的最大值，则我们最多需要等于二叉树深度的次数的比较。N元素的完全二叉树，深度为logN,所以新元素插入的整体时间消耗是O(logN)。<br>来看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public void push(E e) &#123;</div><div class="line">    if (isFull())</div><div class="line">        throw new ArrayIndexOutOfBoundsException(&quot;This Heap Is Full!&quot;);</div><div class="line"></div><div class="line">    heap[currentIndex] = e;</div><div class="line">    int i = currentIndex;</div><div class="line">    while (i &gt; 1) &#123;</div><div class="line">        if (heap[i].compareTo(heap[i / 2]) &gt; 0)</div><div class="line">            swap(i, i / 2);</div><div class="line">        else</div><div class="line">            break;</div><div class="line">        i /= 2;</div><div class="line">    &#125;</div><div class="line">    currentIndex++;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>因为我们的堆本质上是个数组，所以它长度有限，当满了之后我们就不能再继续放入新元素。但是这一点可以通过数组扩充来避免。在hashmap一章中我们已经了解了如何增加数组长度，这里就不在重新实践了。而且这里的扩容相对简单，因为最大堆的元素的位置跟数组的长度没有关系，所以简单的新建数组并且复制就可以了，感兴趣的小伙伴可以自行尝试。<br>从代码中我们可以看到基本的逻辑：</p>
+<ol>
+<li>首先将新元素放入堆的尾部。</li>
+<li>从当前的新元素位置开始，比较新元素和当前的父节点i/2，如果新元素较大则交换位置。</li>
+<li>重复步骤2直到新元素小于父节点或者到达顶端也就是i==1.</li>
+</ol>
+<p>逻辑很简单，实现起来也不复杂，要注意的一点就是无论是新元素在左侧还是右侧，因为对于int来说，<code>(i*2) / 2</code> 和 <code>(i*2+1) /2</code> 都等于i，所以我们不需要在意左右位置和i的奇偶性，只需要比较i/2就可以了。</p>
+<h3 id="Poll"><a href="#Poll" class="headerlink" title="Poll"></a>Poll</h3><p>取出的操作也很简单。最大值已经在根节点，所以我们只要取出根节点就可以了。之后我们需要从尾部拿到最后一个元素，放到根节点，然后一路跟子节点比较，如果小于子节点就交换位置，直到到达底层或者不在小于子节点。我们看图说话。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">有最大堆 [16, 13, 14, 12, 0, 6, 11， 1] </div><div class="line"></div><div class="line">                16  </div><div class="line">             /     \  </div><div class="line">           13        14</div><div class="line">         /  \     /    \</div><div class="line">       12    0   6      11</div><div class="line">      /</div><div class="line">     1</div><div class="line"></div><div class="line">取出顶部元素 16. 将尾部元素1放入顶端： [1, 13, 14, 12, 0, 6, 11] </div><div class="line"></div><div class="line">                1 </div><div class="line">             /     \  </div><div class="line">           13        14</div><div class="line">         /  \     /    \</div><div class="line">       12    0   6      11</div><div class="line"></div><div class="line">比较1和两个子节点，跟较大的交换位置： [14, 13, 1, 12, 0, 6, 11] </div><div class="line"></div><div class="line">                14 </div><div class="line">             /     \  </div><div class="line">           13        1</div><div class="line">         /  \     /    \</div><div class="line">       12    0   6      11</div><div class="line"></div><div class="line">继续比较，跟较大的交换位置  [14, 13, 11, 12, 0, 6, 1] </div><div class="line"></div><div class="line">                14 </div><div class="line">             /     \  </div><div class="line">           13        11</div><div class="line">         /  \     /    \</div><div class="line">       12    0   6      1</div><div class="line"></div><div class="line">取出结束.</div></pre></td></tr></table></figure></p>
+<p>跟放入的逻辑很相似。</p>
+<ol>
+<li>取出最大值，将尾部元素放到堆首。</li>
+<li>比较该元素和两个子节点的较大子节点，如果该元素小于较大的子节点，则将元素与较大子节点交换。</li>
+<li>重复步骤2直到该元素不在小于子节点。</li>
+</ol>
+<p>来看代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public E poll() &#123;</div><div class="line">    if (isEmpty())</div><div class="line">        throw new IllegalStateException(&quot;This Heap Is Empty!&quot;);</div><div class="line"></div><div class="line">    currentIndex--;</div><div class="line">    E max = heap[1];</div><div class="line">    heap[1] = heap[currentIndex];</div><div class="line">    heap[currentIndex] = null;</div><div class="line">    int i = 1;</div><div class="line">    while (i &lt;= currentIndex / 2) &#123;</div><div class="line">        int larger = 0;</div><div class="line">        if (heap[i * 2] == null)</div><div class="line">            break;</div><div class="line">        else if (heap[i * 2 + 1] == null)</div><div class="line">            larger = i * 2;</div><div class="line">        else</div><div class="line">            larger = heap[i * 2].compareTo(heap[i * 2 + 1]) &gt; 0 ? i * 2 : i * 2 + 1;</div><div class="line"></div><div class="line">        if (heap[i].compareTo(heap[larger]) &lt; 0)</div><div class="line">            swap(i, larger);</div><div class="line">        else</div><div class="line">            break;</div><div class="line">        i = larger;</div><div class="line">    &#125;</div><div class="line">    return max;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>代码看起来稍微复杂一点。但是逻辑还是一样的。主要的复杂点在于最后一层可能有空节点，所以需要判断子节点时候为空。这里其实可以简化，但是为了便于阅读和理解我们用三个if来表示逻辑分支。当i*2子节点也就是当前节点的左节点为空，说明两个节点都为空，可以返回。如果当前节点的右节点为空，则左节点是子节点中的最大值。如果两个节点都在，则比较两个节点，选择较大子节点。<br>之后比较我们的父节点和较大的子节点，如果子节点比父节点大，交换位置继续向下比较，否则循环停止，取出完成。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>我们来看看运行的结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) &#123;</div><div class="line">    MaxHeap&lt;Integer&gt; heap = new MaxHeap&lt;&gt;(Integer.class, 11);</div><div class="line"></div><div class="line">    while (!heap.isFull())</div><div class="line">        heap.push((int) (Math.random() * 100));</div><div class="line">    while (!heap.isEmpty())</div><div class="line">        System.out.print(heap.poll() + &quot; &quot;);</div><div class="line"></div><div class="line">    System.out.println();</div><div class="line"></div><div class="line">    while (!heap.isFull())</div><div class="line">        heap.push((int) (Math.random() * 100));</div><div class="line">    while (!heap.isEmpty())</div><div class="line">        System.out.print(heap.poll() + &quot; &quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>插入一些随机数，然后取出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">86 74 63 59 58 35 20 14 1 </div><div class="line">97 93 59 56 52 42 34 33 6</div></pre></td></tr></table></figure></p>
+<p>可以看到已经排好序了。这个结构和排序方法的放入和取出都是最坏情况O(logN)，所以对于N个数字排序这种堆排序的时间复杂度是O(logN)。但是，这种堆排序有它独特的优点和使用场景。比如在生产中，工厂的数字信号都是时间信号，既每个数据点都有时间戳，比如某检测电机转速的探头的数据 {timestamp:long value, data:double value}。对于这样的数据，通常是数据流传输到控制中心来集中处理。但是由于网络的延迟和实际远程部署的物理限制，数据流的传输可能会受到影响.<br>也就是说，对于时间信号[{1,100}, {2,200}, {3, 300}, {4,400}…]控制中心接收到的数字信号可能是[{1,100}, {3,300}, {2, 200}, {4,400}…]。由于网络延迟等，收到的数据信号的顺序可能会有小范围的混乱。这种时候，一个堆排序就可以解决这个问题。如果在接收端，我们先把信号放入一个固定长度的最小堆结构，比如这个最小堆长度为3秒钟的数据量，则从堆中取出的时候，我们取出的元素一定是最近三秒内到达的数据中的的最小时间戳数据。这样一来，由于网络延迟不太会超过特定时间长度，则我们处理的信号就可以恢复原本的时间顺序。在工业信号处理中，由最小堆实现的优先级队列是很常见的时间顺序过滤方法。</p>
+<p><br>依旧附上了源码。<br><br>
+<button onclick="window.open('MaxHeap.java')">点我下载 MaxHeap.java</button>
+<br><br>谢谢阅读。<br></p>
+<p>　/) /)<br>ฅ(• - •)ฅ</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/data-structure/tags/data-structure/" rel="tag"># data structure</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/data-structure/2017/04/22/postMutex/" rel="next" title="第1天的多线程">
+                <i class="fa fa-chevron-left"></i> 第1天的多线程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/data-structure/avatar.jpg"
+               alt="弦子" />
+          <p class="site-author-name" itemprop="name">弦子</p>
+          <p class="site-description motion-element" itemprop="description">I pledge my life and honor to the Programming, for this night and all the nights to come.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/data-structure/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/data-structure/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Heap"><span class="nav-number">1.</span> <span class="nav-text">Heap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Completed-Binary-Tree"><span class="nav-number">1.1.1.</span> <span class="nav-text">Completed Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Max-Heap"><span class="nav-number">1.1.2.</span> <span class="nav-text">Max Heap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application"><span class="nav-number">1.2.</span> <span class="nav-text">Application</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation"><span class="nav-number">1.3.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Push"><span class="nav-number">1.3.1.</span> <span class="nav-text">Push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Poll"><span class="nav-number">1.3.2.</span> <span class="nav-text">Poll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">弦子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/data-structure/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/data-structure/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/data-structure/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
