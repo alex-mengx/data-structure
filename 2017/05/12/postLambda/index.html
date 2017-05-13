@@ -1,0 +1,689 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/data-structure/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/data-structure/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/data-structure/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/data-structure/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="LambdaLambda其实并不复杂。它只是一个函数而已。今天我们来看看lambda的使用。我们会尝试几个简单的例子，然后尝试建立一个新的lambda接口，最后在试着在实际使用中熟悉它。
+Lambda Types是的，java中的lambda是有类型的。跟JS的区别在于，JS中的lambda是一个自定义函数，这个函数是可以动态定义的，也就是说你不需要提前定义任何的格式或者类型。但是在java中，l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二天的JavaLambda">
+<meta property="og:url" content="https://alex-mengx.github.io/2017/05/12/postLambda/index.html">
+<meta property="og:site_name" content="Alex's data structure class">
+<meta property="og:description" content="LambdaLambda其实并不复杂。它只是一个函数而已。今天我们来看看lambda的使用。我们会尝试几个简单的例子，然后尝试建立一个新的lambda接口，最后在试着在实际使用中熟悉它。
+Lambda Types是的，java中的lambda是有类型的。跟JS的区别在于，JS中的lambda是一个自定义函数，这个函数是可以动态定义的，也就是说你不需要提前定义任何的格式或者类型。但是在java中，l">
+<meta property="og:updated_time" content="2017-05-13T04:28:24.938Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第二天的JavaLambda">
+<meta name="twitter:description" content="LambdaLambda其实并不复杂。它只是一个函数而已。今天我们来看看lambda的使用。我们会尝试几个简单的例子，然后尝试建立一个新的lambda接口，最后在试着在实际使用中熟悉它。
+Lambda Types是的，java中的lambda是有类型的。跟JS的区别在于，JS中的lambda是一个自定义函数，这个函数是可以动态定义的，也就是说你不需要提前定义任何的格式或者类型。但是在java中，l">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/data-structure/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://alex-mengx.github.io/2017/05/12/postLambda/"/>
+
+
+
+
+
+  <title> 第二天的JavaLambda | Alex's data structure class </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/data-structure/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Alex's data structure class</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/data-structure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/data-structure/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/data-structure/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://alex-mengx.github.io/data-structure/2017/05/12/postLambda/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="弦子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/data-structure/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Alex's data structure class">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Alex's data structure class" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第二天的JavaLambda
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-12T12:33:05-04:00">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h1><p>Lambda其实并不复杂。它只是一个函数而已。今天我们来看看lambda的使用。我们会尝试几个简单的例子，然后尝试建立一个新的lambda接口，最后在试着在实际使用中熟悉它。</p>
+<h2 id="Lambda-Types"><a href="#Lambda-Types" class="headerlink" title="Lambda Types"></a>Lambda Types</h2><p>是的，java中的lambda是有类型的。跟JS的区别在于，JS中的lambda是一个自定义函数，这个函数是可以动态定义的，也就是说你不需要提前定义任何的格式或者类型。但是在java中，lambda这个函数实际上也是一个Object，所以需要类型支持。虽然一般在代码里看不到，但是它是存在的。我们来看看自带的几种不同类型的lambda。</p>
+<h3 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h3><p>Consumer是一个接受单个参数且没有返回值的函数。<br>Consumer的语法是这样的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">数据 -&gt; &#123;</div><div class="line">    处理数据</div><div class="line">    &#125;；</div></pre></td></tr></table></figure></p>
+<p>我们来看个例子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Consumer&lt;Integer&gt; consumInteger = i -&gt; System.out.println(i); // 如果只有一行代码，&#123;&#125;可以省略。类似于if语句的&#123;&#125;只有一行代码可以省略。</div><div class="line"></div><div class="line">public static void main(final String[] args) &#123;</div><div class="line">        consumInteger.accept(19);</div><div class="line">&#125;</div><div class="line"></div><div class="line">输出：</div><div class="line">19</div><div class="line"></div><div class="line">实际上，这个Consumer在逻辑上等同于：</div><div class="line">consumInteger(Integer i) &#123;</div><div class="line">    System.out.println(i);</div><div class="line">&#125;</div><div class="line"></div><div class="line">当然Java的内部实现跟方法是不同的，我们后面会看到。</div></pre></td></tr></table></figure></p>
+<p>这就是一个很简单的Consumer。它接受一个integer，然后打印出来。</p>
+<h3 id="Supplier"><a href="#Supplier" class="headerlink" title="Supplier"></a>Supplier</h3><p>顾名思义，跟Consumer正好相反，这个函数不接受参数，相对的，它返回一个参数。有同学可能会疑问，为什么我们需要supplier，其实不要把它当作一个小函数，它可以成为一个子系统的对外的接口。来看语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">() -&gt; &#123;</div><div class="line">    生成数据；</div><div class="line">    return 数据；</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>跟Consumer不同，我们看到这个函数不接受参数，而且有返回语句。来看个例子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Supplier&lt;Double&gt; supplyRand = () -&gt; Math.random(); // 这里的return省略了，因为只有一行代码，箭头可以直接指向返回的数据。</div><div class="line"></div><div class="line">public static void main(final String[] args) &#123;</div><div class="line">        System.out.println(supplyRand.get());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">输出：</div><div class="line">0.3155123546019203</div></pre></td></tr></table></figure></p>
+<h3 id="Predicate"><a href="#Predicate" class="headerlink" title="Predicate"></a>Predicate</h3><p>这也是一个常用的函数。这个函数接受一个数据，返回一个true false值。这个函数常用来判断条件，比如输入的值是否满足特定的条件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">i -&gt; &#123;</div><div class="line">    boolean testResult =测试数据的结果</div><div class="line">    return testResult;</div><div class="line">&#125;</div><div class="line"></div><div class="line">来看个例子：</div><div class="line">Predicate&lt;Integer&gt; predicate = i -&gt; i % 3 == 0;</div><div class="line"></div><div class="line">public static void main(final String[] args) &#123;</div><div class="line">        System.out.println(predicate.test(19));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">输出：</div><div class="line">false</div><div class="line">显然，19不能被3整除，所以返回的结果是false。</div></pre></td></tr></table></figure></p>
+<h3 id="BiConsumer"><a href="#BiConsumer" class="headerlink" title="BiConsumer"></a>BiConsumer</h3><p>这个函数在使用hashmap的时候会很常见。这个函数跟consumer的区别就是它接受两个参数。<br>格式很类似：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(数据1, 数据2) -&gt; &#123;</div><div class="line">    处理两个参数；</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们来看个例子，这个例子里面函数将会接受两个String，并且按条件打印其中一个或者两个字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">BiConsumer&lt;String, String&gt; consumerStrings = (str1, str2) -&gt; &#123;</div><div class="line">        if (str1.equalsIgnoreCase(str2))</div><div class="line">            System.out.println(str1);</div><div class="line">        else System.out.println(str1 + str2);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">public static void main(final String[] args) &#123;</div><div class="line">        consumerStrings.accept(&quot;string&quot;, &quot;String&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">输出：</div><div class="line">string</div><div class="line">因为两个字符串一致，所以输出第一个字符串。</div></pre></td></tr></table></figure></p>
+<h2 id="Why-Lambda"><a href="#Why-Lambda" class="headerlink" title="Why Lambda"></a>Why Lambda</h2><p>既然我们可以用方法来完成函数可以完成的事情，那我们为什么还需要函数呢？因为有时候我们需要延迟运行，或者在系统内需要动态的切换一些功能。同时，函数可以帮助减少代码数量，同时不损伤太多的可读性。</p>
+<h3 id="Sort"><a href="#Sort" class="headerlink" title="Sort"></a>Sort</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">    Integer[] array = &#123; 2, 8, 4, 6, 3, 7 &#125;;</div><div class="line">    Arrays.sort(array, new Comparator&lt;Integer&gt;() &#123;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public int compare(Integer i1, Integer i2) &#123;</div><div class="line"></div><div class="line">            return i1 - i2;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    System.out.println(Arrays.asList(array));</div><div class="line"></div><div class="line">输出：</div><div class="line">[2, 3, 4, 6, 7, 8]</div><div class="line"></div><div class="line">因为sort方法本身不知道如何处理一个包含了object的数组，所以我们需要告诉sort这个方法，</div><div class="line">如何比较两个Object，它才能帮助我们排序。</div><div class="line"></div><div class="line">简便一点的做法：</div><div class="line">    Integer[] array = &#123; 2, 8, 4, 6, 3, 7 &#125;;</div><div class="line">    Arrays.sort(array, (i1, i2) -&gt; i1 - i2);</div><div class="line"></div><div class="line">    System.out.println(Arrays.asList(array));</div><div class="line"></div><div class="line">输出：</div><div class="line">[2, 3, 4, 6, 7, 8]</div></pre></td></tr></table></figure>
+<p>lambda最大的优势就是可以不仅仅传递数据，还可以传递行为。这里我们用lambda传递了如何比较两个元素的函数，sort就可以排序了。</p>
+<h2 id="Typical-Usage"><a href="#Typical-Usage" class="headerlink" title="Typical Usage"></a>Typical Usage</h2><p>在java8中有很多自带的方法接受lambda，这使得很多操作变得很简便。我们来看一下Collection.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">    Integer[] array = &#123; 2, 30, 2, 6, 56, 34, 12, 7, 26, 8, 48 &#125;;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(array);</div><div class="line"></div><div class="line">    List&lt;Integer&gt; list2 = list.stream().filter(predicate).collect(Collectors.toList());</div><div class="line">    System.out.println(list2);</div><div class="line"></div><div class="line">输出：</div><div class="line">[30, 6, 12, 48]</div></pre></td></tr></table></figure></p>
+<p>我们用了之前的Predicate里面我们定义的函数<code>Predicate&lt;Integer&gt; predicate = i -&gt; i % 3 == 0;</code>, 并且我们将数组转化成了stream。stream有很多很好用的方法，很多返回stream自身，所以可以一串的调用过去。这里我们使用了filter方法，这个方法接受一个Predicate函数，所以如果你有一个Collection需要选出一些特定的元素的话，filter是你的好朋友。后面的collect是另一个方法，它会将stream收集起来根据收集器的类型来返回对应的形式。在这里我们用了toList，所以我们获得了一个List。<code>Collectors</code>里面有很多的收集器和其他的函数，包括stream中的平均值，最大值，最小值以及按照某种特性分成不同的组等等。<br>我们再来看一个稍微复杂一点点的例子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">    Integer[] array = &#123; 2, 30, 11, 6, 56, 34, 12, 7, 26, 8, 48 &#125;;</div><div class="line">    List&lt;Integer&gt; list = Arrays.asList(array);</div><div class="line"></div><div class="line">    Map&lt;String, List&lt;Integer&gt;&gt; map = list.stream()</div><div class="line">            .collect(Collectors.groupingBy(i -&gt; i - i % 10 + &quot;&quot;, Collectors.toList()));</div><div class="line"></div><div class="line">    map.entrySet().forEach(entry -&gt; System.out.println(entry.getKey() + &quot;: &quot; + entry.getValue().toString()));</div><div class="line"></div><div class="line">输出：</div><div class="line">0: [2, 6, 7, 8]</div><div class="line">50: [56]</div><div class="line">40: [48]</div><div class="line">30: [30, 34]</div><div class="line">20: [26]</div><div class="line">10: [11, 12]</div></pre></td></tr></table></figure></p>
+<p>看起来可能有点复杂，但是逻辑说起来就不复杂了。重点在于这一行<code>list.stream().collect(Collectors.groupingBy(i -&gt; i - i % 10 + &quot;&quot;, Collectors.toList()));</code>。 首先数组被转化成了stream，然后直接调用了collect方法。方法里面我们传递了一个函数。这一个函数是个groupingbBy的收集器，这个收集器会对于每一个元素进行一个转化，方式就是我们lambda中规定的，假设是数字48，计算的结果就是48 - 48%10 = 40，然后加上空字符串，转化成了“40”字符串。转化后的字符串会被当做key放入一个map，然后将元素放入这个key对应的value中。从前面的定义我们可以看到，<code>Map&lt;String, List&lt;Integer&gt;&gt;</code>，就是说，对于每个数字，我们根据数字来计算一个字符串，这个字符串是这个数字所在的10位数区间，然后将同区间内的数字放入同一个list里面。<br>比较复杂的操作，在使用了lambda之后变得如此的简单明了，只要了解了函数的概念，自带的函数会帮你解决很多需要写好几行甚至几十行代码才可以解决的问题。</p>
+<h2 id="Interface"><a href="#Interface" class="headerlink" title="Interface"></a>Interface</h2><p>除了java自带的函数，如果我们需要别的函数该怎么办呢？实际上，由于函数本身其实也是Object， 所以java中我们可以自定义一个interface接口来定义新的函数格式。我们先来看个例子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@FunctionalInterface</div><div class="line">interface TriFunction&lt;T&gt; &#123;</div><div class="line">    public T Operation(T t1, T t2, T t3);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>非常简单的一个interface。但是由于这个interface，我们就可以建立一种新的匿名函数了。比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TriFunction&lt;Integer&gt; max = (i1, i2, i3) -&gt; Math.max(Math.max(i1, i2), i3);</div></pre></td></tr></table></figure></p>
+<p>这个函数返回三个数字中的最大值。这里主要是为了说明，lambda自身在java中也是对象，所以不像JS一样可以任意创建新的函数。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>今天我们主要讲了Java自带的几种lambda函数类型，也看了几个简单的例子，希望大家在工作中可以尝试使用这些新的方法来解决问题，让代码变得简洁高效且易读。</p>
+<p>今天主要是概念，代码很少，但是我还是写在了一个类文件里，感兴趣的同学可以下载下来看看。</p>
+<p><br>Java Lambda<br><br>
+<button onclick="window.open('Lambda.java')">点我下载 Lambda.java</button>
+<br><br>谢谢阅读。<br></p>
+<p>　/) /)<br>ฅ(• - •)ฅ</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/data-structure/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/data-structure/2017/05/04/postSorting/" rel="next" title="第5天的Heap">
+                <i class="fa fa-chevron-left"></i> 第5天的Heap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/data-structure/avatar.jpg"
+               alt="弦子" />
+          <p class="site-author-name" itemprop="name">弦子</p>
+          <p class="site-description motion-element" itemprop="description">I pledge my life and honor to the Programming, for this night and all the nights to come.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/data-structure/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/data-structure/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Lambda"><span class="nav-number">1.</span> <span class="nav-text">Lambda</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda-Types"><span class="nav-number">1.1.</span> <span class="nav-text">Lambda Types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Consumer"><span class="nav-number">1.1.1.</span> <span class="nav-text">Consumer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Supplier"><span class="nav-number">1.1.2.</span> <span class="nav-text">Supplier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Predicate"><span class="nav-number">1.1.3.</span> <span class="nav-text">Predicate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BiConsumer"><span class="nav-number">1.1.4.</span> <span class="nav-text">BiConsumer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Lambda"><span class="nav-number">1.2.</span> <span class="nav-text">Why Lambda</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sort"><span class="nav-number">1.2.1.</span> <span class="nav-text">Sort</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Typical-Usage"><span class="nav-number">1.3.</span> <span class="nav-text">Typical Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interface"><span class="nav-number">1.4.</span> <span class="nav-text">Interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.5.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">弦子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/data-structure/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/data-structure/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/data-structure/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/data-structure/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/data-structure/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
